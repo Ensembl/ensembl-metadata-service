@@ -24,7 +24,6 @@ from tempfile import TemporaryDirectory
 
 from ensembl.production.metadata import service
 
-
 class TestClass:
     dirpath = TemporaryDirectory()
     connection = sqlite3.connect(f'{dirpath.name}/test.db')
