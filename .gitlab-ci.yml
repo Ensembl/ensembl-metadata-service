@@ -16,8 +16,8 @@ variables:
 
 stages:
   - test
-#  - build
-#  - deploy
+  - build
+  - deploy
 
 #cache:
 #  paths:
