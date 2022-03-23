@@ -48,6 +48,7 @@ class TestClass:
     except db.exc.OperationalError as err:
         raise ValueError(f'Could not connect to database: {err}.') from err
 
+
     def test_create_genome(self):
         """Test service.create_genome function"""
         input_dict = {
