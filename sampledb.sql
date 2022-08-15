@@ -15,9 +15,10 @@ CREATE TABLE `assembly` (
 `accession` TEXT NOT NULL,
 `level` TEXT NOT NULL,
 `name` TEXT NOT NULL,
+`tolid` TEXT DEFAULT NULL,
 PRIMARY KEY (`assembly_id`)
 );
-INSERT INTO `assembly` VALUES (2,NULL,'GCA_009873245.2','chromosome','mBalMus1.v2');
+INSERT INTO `assembly` VALUES (2,NULL,'GCA_009873245.2','chromosome','mBalMus1.v2',NULL),(254,NULL,'test accession','test level','test name',NULL);
 
 CREATE TABLE `assembly_sequence` (
 `assembly_sequence_id` INTEGER NOT NULL ,
@@ -116,6 +117,7 @@ CREATE TABLE `ensembl_site` (
 `uri` TEXT NOT NULL,
 PRIMARY KEY (`site_id`)
 );
+INSERT INTO `ensembl_site` VALUES (7,'vertebrates','Ensembl','https://ensembl.org/');
 
 CREATE TABLE `genome` (
 `genome_id` INTEGER NOT NULL ,
@@ -162,9 +164,46 @@ CREATE TABLE `organism` (
 `scientific_name` TEXT DEFAULT NULL,
 `url_name` TEXT NOT NULL,
 `ensembl_name` TEXT NOT NULL,
+`scientific_parlance_name` TEXT NOT NULL,
 PRIMARY KEY (`organism_id`)
 );
-INSERT INTO `organism` VALUES (26,9771,9771,'Balaenoptera musculus (Blue whale) - GCA_009873245.2',NULL,'Balaenoptera musculus','Balaenoptera_musculus_GCA_009873245.2','balaenoptera_musculus'),(27,9771,9771,'Balaenoptera musculus (Blue whale) - GCA_009873245.3',NULL,'Balaenoptera musculus','Balaenoptera_musculus_GCA_009873245.3','balaenoptera_musculus_gca009873245v3'),(41,9615,9615,'Canis lupus familiaris (Basenji) - GCA_004886185.1','Basenji','Canis lupus familiaris','Canis_lupus_familiaris_GCA_004886185.1','canis_lupus_gca004886185v1'),(42,9615,9615,'Canis lupus familiaris (Basenji) - GCA_004886185.2','Basenji','Canis lupus familiaris','Canis_lupus_familiaris_GCA_004886185.2','canis_lupus_gca004886185v2'),(43,9615,9615,'Canis lupus familiaris (Boxer) - GCA_000002285.4','Boxer','Canis lupus familiaris','Canis_lupus_familiaris_GCA_000002285.4','canis_lupus_gca000002285v4'),(44,9615,9615,'Canis lupus familiaris (German Shepherd) - GCA_008641055.1','German Shepherd','Canis lupus familiaris','Canis_lupus_familiaris_GCA_008641055.1','canis_lupus_familiarisgermanshepherd'),(45,9615,9615,'Canis lupus familiaris (German Shepherd) - GCA_008641055.3','German Shepherd','Canis lupus familiaris','Canis_lupus_familiaris_GCA_008641055.3','canis_lupus_gca008641055v3'),(46,9615,9615,'Canis lupus familiaris (German Shepherd) - GCA_011100685.1','German Shepherd','Canis lupus familiaris','Canis_lupus_familiaris_GCA_011100685.1','canis_lupus_gca011100685v1'),(47,9615,9615,'Canis lupus familiaris (Great Dane) - GCA_005444595.1','Great Dane','Canis lupus familiaris','Canis_lupus_familiaris_GCA_005444595.1','canis_lupus_gca005444595v1'),(48,9615,9615,'Canis lupus familiaris (Labrador retriever) - GCA_014441545.1','Labrador retriever','Canis lupus familiaris','Canis_lupus_familiaris_GCA_014441545.1','canis_lupus_gca014441545v1'),(50,9925,9925,'Capra hircus (Goat) - GCA_001704415.1',NULL,'Capra hircus','Capra_hircus_GCA_001704415.1','capra_hircus_sanclemente'),(63,252671,252671,'Clytia hemisphaerica (Z4C2) - GCA_902728285.1','Z4C2','Clytia hemisphaerica','Clytia_hemisphaerica_GCA_902728285.1','clytia_hemisphaerica_gca902728285'),(79,1010633,1010633,'Digitaria exilis (Fonio) - GCA_902859565.1','digitaria_exilis','Digitaria exilis','Digitaria_exilis','digitaria_exilis_gca902859565v1'),(138,113334,113334,'Melitaea cinxia (alternate haplotype) - GCA_905220555.1',NULL,'Melitaea cinxia','Melitaea_cinxia_GCA_905220555.1','melitaea_cinxia_gca905220555v1'),(139,113334,113334,'Melitaea cinxia (Glanville fritillary) - GCA_905220565.1',NULL,'Melitaea cinxia','Melitaea_cinxia_GCA_905220565.1','melitaea_cinxia_gca905220565v1'),(195,10116,10116,'Rattus norvegicus (BN/NHsdMcwi) - GCA_015227675.2','BN/NHsdMcwi','Rattus norvegicus','Rattus_norvegicus_GCA_015227675.2','rattus_norvegicus_gca015227675v2'),(217,9823,9823,'Sus scrofa (Pig) - GCA_000003025.6',NULL,'Sus scrofa','Sus_scrofa_GCA_000003025.6','sus_scrofa_gca000003025v6'),(241,507980,507980,'Tyto alba alba (Barn owl) - GCA_902150015.1',NULL,'Tyto alba alba','Tyto_alba_alba_GCA_902150015.1','tyto_alba_alba');
+INSERT INTO `organism`
+VALUES (26, 9771, 9771, 'Balaenoptera musculus (Blue whale) - GCA_009873245.2', NULL, 'Balaenoptera musculus',
+        'Balaenoptera_musculus_GCA_009873245.2', 'balaenoptera_musculus', 'Balaenoptera musculus'),
+       (27, 9771, 9771, 'Balaenoptera musculus (Blue whale) - GCA_009873245.3', NULL, 'Balaenoptera musculus',
+        'Balaenoptera_musculus_GCA_009873245.3', 'balaenoptera_musculus_gca009873245v3', 'Balaenoptera musculus'),
+       (41, 9615, 9615, 'Canis lupus familiaris (Basenji) - GCA_004886185.1', 'Basenji', 'Canis lupus familiaris',
+        'Canis_lupus_familiaris_GCA_004886185.1', 'canis_lupus_gca004886185v1', 'Canis lupus familiaris'),
+       (42, 9615, 9615, 'Canis lupus familiaris (Basenji) - GCA_004886185.2', 'Basenji', 'Canis lupus familiaris',
+        'Canis_lupus_familiaris_GCA_004886185.2', 'canis_lupus_gca004886185v2', 'Canis lupus familiaris'),
+       (43, 9615, 9615, 'Canis lupus familiaris (Boxer) - GCA_000002285.4', 'Boxer', 'Canis lupus familiaris',
+        'Canis_lupus_familiaris_GCA_000002285.4', 'canis_lupus_gca000002285v4', 'Canis lupus familiaris'),
+       (44, 9615, 9615, 'Canis lupus familiaris (German Shepherd) - GCA_008641055.1', 'German Shepherd',
+        'Canis lupus familiaris', 'Canis_lupus_familiaris_GCA_008641055.1', 'canis_lupus_familiarisgermanshepherd', 'German Shepherd'),
+       (45, 9615, 9615, 'Canis lupus familiaris (German Shepherd) - GCA_008641055.3', 'German Shepherd',
+        'Canis lupus familiaris', 'Canis_lupus_familiaris_GCA_008641055.3', 'canis_lupus_gca008641055v3', 'German Shepherd'),
+       (46, 9615, 9615, 'Canis lupus familiaris (German Shepherd) - GCA_011100685.1', 'German Shepherd',
+        'Canis lupus familiaris', 'Canis_lupus_familiaris_GCA_011100685.1', 'canis_lupus_gca011100685v1', 'German Shepherd'),
+       (47, 9615, 9615, 'Canis lupus familiaris (Great Dane) - GCA_005444595.1', 'Great Dane', 'Canis lupus familiaris',
+        'Canis_lupus_familiaris_GCA_005444595.1', 'canis_lupus_gca005444595v1', 'Canis lupus familiaris'),
+       (48, 9615, 9615, 'Canis lupus familiaris (Labrador retriever) - GCA_014441545.1', 'Labrador retriever',
+        'Canis lupus familiaris', 'Canis_lupus_familiaris_GCA_014441545.1', 'canis_lupus_gca014441545v1', 'Labrador retriever'),
+       (50, 9925, 9925, 'Capra hircus (Goat) - GCA_001704415.1', NULL, 'Capra hircus', 'Capra_hircus_GCA_001704415.1',
+        'capra_hircus_sanclemente', 'Capra hircus'),
+       (63, 252671, 252671, 'Clytia hemisphaerica (Z4C2) - GCA_902728285.1', 'Z4C2', 'Clytia hemisphaerica',
+        'Clytia_hemisphaerica_GCA_902728285.1', 'clytia_hemisphaerica_gca902728285', 'Clytia hemisphaerica'),
+       (79, 1010633, 1010633, 'Digitaria exilis (Fonio) - GCA_902859565.1', 'digitaria_exilis', 'Digitaria exilis',
+        'Digitaria_exilis', 'digitaria_exilis_gca902859565v1', 'Digitaria exilis'),
+       (138, 113334, 113334, 'Melitaea cinxia (alternate haplotype) - GCA_905220555.1', NULL, 'Melitaea cinxia',
+        'Melitaea_cinxia_GCA_905220555.1', 'melitaea_cinxia_gca905220555v1', 'Melitaea cinxia'),
+       (139, 113334, 113334, 'Melitaea cinxia (Glanville fritillary) - GCA_905220565.1', NULL, 'Melitaea cinxia',
+        'Melitaea_cinxia_GCA_905220565.1', 'melitaea_cinxia_gca905220565v1', 'Melitaea cinxia'),
+       (195, 10116, 10116, 'Rattus norvegicus (BN/NHsdMcwi) - GCA_015227675.2', 'BN/NHsdMcwi', 'Rattus norvegicus',
+        'Rattus_norvegicus_GCA_015227675.2', 'rattus_norvegicus_gca015227675v2', 'Rattus norvegicus'),
+       (217, 9823, 9823, 'Sus scrofa (Pig) - GCA_000003025.6', NULL, 'Sus scrofa', 'Sus_scrofa_GCA_000003025.6',
+        'sus_scrofa_gca000003025v6', 'Sus scrofa'),
+       (241, 507980, 507980, 'Tyto alba alba (Barn owl) - GCA_902150015.1', NULL, 'Tyto alba alba',
+        'Tyto_alba_alba_GCA_902150015.1', 'tyto_alba_alba', 'Tyto alba alba');
 
 CREATE TABLE `organism_group` (
 `organism_group_id` INTEGER NOT NULL ,

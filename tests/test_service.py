@@ -22,7 +22,7 @@ from google.protobuf import json_format
 import sqlite3
 from tempfile import TemporaryDirectory
 
-from ensembl.production.metadata import service
+from ensembl.production.metadata import service, ensembl_metadata_pb2
 
 
 class TestClass:
@@ -319,7 +319,6 @@ class TestClass:
             'statisticValue': "22"
         }
 
-
     def test_get_dataset_by_genome_id(self):
         output = json_format.MessageToJson(service.get_dataset_by_genome_id(self.engine, '3c4cec7f-fb69-11eb-8dac-005056b32883', 'assembly'))
         output = json.loads(output)
@@ -342,3 +341,174 @@ class TestClass:
             service.get_dataset_by_genome_id(self.engine, '3c4cec7f-fb69-11eb-8dac-005056b32883', 'blah blah blah'))
         output = json.loads(output)
         assert output == {}
+
+    def test_get_genome_by_uuid(self):
+        output = json_format.MessageToJson(service.get_genome_by_uuid(self.engine, '3c4cec7f-fb69-11eb-8dac-005056b32883', 1))
+        expected_output = {
+            "genomeUuid": "3c4cec7f-fb69-11eb-8dac-005056b32883",
+            "assembly": {
+                "accession": "GCA_009873245.2",
+                "name": "mBalMus1.v2",
+                "level": "chromosome"
+            },
+            "taxon": {
+                "taxonomyId": 9771,
+                "scientificName": "Balaenoptera musculus"
+            },
+            "created": "2020-05-01 13:28:33",
+            "organism": {
+                "displayName": "Balaenoptera musculus (Blue whale) - GCA_009873245.2",
+                "scientificName": "Balaenoptera musculus",
+                "urlName": "Balaenoptera_musculus_GCA_009873245.2",
+                "ensemblName": "balaenoptera_musculus"
+            },
+            "release": {
+                "releaseVersion": 1,
+                "releaseDate": "2020-06-04"
+            }
+        }
+        assert json.loads(output) == expected_output
+
+
+    def test_genome_by_uuid_release_version_unspecified(self):
+        output = json_format.MessageToJson(service.get_genome_by_uuid(self.engine, '3c52097a-fb69-11eb-8dac-005056b32883', 0))
+        expected_output = {
+            "genomeUuid": "3c52097a-fb69-11eb-8dac-005056b32883",
+            "assembly": {
+                "accession": "test accession",
+                "name": "test name",
+                "level": "test level"
+            },
+            "taxon": {
+                "taxonomyId": 9823,
+                "scientificName": "Sus scrofa"
+            },
+            "created": "2021-07-19 13:22:26",
+            "organism": {
+                "displayName": "Sus scrofa (Pig) - GCA_000003025.6",
+                "scientificName": "Sus scrofa",
+                "urlName": "Sus_scrofa_GCA_000003025.6",
+                "ensemblName": "sus_scrofa_gca000003025v6"
+            },
+            "release": {
+                "releaseVersion": 24,
+                "releaseDate": "2021-06-30",
+                "isCurrent": True
+            }
+        }
+        assert json.loads(output) == expected_output
+
+
+
+    def test_get_genomes_by_uuid_null(self):
+        output = service.get_genome_by_uuid(self.engine, None, 0)
+        assert output == ensembl_metadata_pb2.Genome()
+
+
+    def test_get_genomes_by_keyword(self):
+        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Melitaea cinxia', 22)]
+        expected_output = [
+            {
+                'genomeUuid': '3c520192-fb69-11eb-8dac-005056b32883',
+                'assembly': {},
+                'taxon': {
+                    'taxonomyId': 113334,
+                    'scientificName': 'Melitaea cinxia'
+                },
+                'created': '2021-06-08 18:28:11',
+                'organism': {
+                    'displayName': 'Melitaea cinxia (alternate haplotype) - GCA_905220555.1',
+                    'scientificName': 'Melitaea cinxia',
+                    'urlName': 'Melitaea_cinxia_GCA_905220555.1',
+                    'ensemblName': 'melitaea_cinxia_gca905220555v1'
+                },
+                'release': {
+                    'releaseVersion': 22,
+                    'releaseDate': '2021-05-19'
+                }
+            },
+            {
+                'genomeUuid': '3c52036e-fb69-11eb-8dac-005056b32883',
+                'assembly': {},
+                'taxon': {
+                    'taxonomyId': 113334,
+                    'scientificName': 'Melitaea cinxia'
+                },
+                'created': '2021-06-08 19:37:40',
+                'organism': {
+                    'displayName': 'Melitaea cinxia (Glanville fritillary) - GCA_905220565.1',
+                    'scientificName': 'Melitaea cinxia',
+                    'urlName': 'Melitaea_cinxia_GCA_905220565.1',
+                    'ensemblName': 'melitaea_cinxia_gca905220565v1'
+                },
+                'release': {
+                    'releaseVersion': 22,
+                    'releaseDate': '2021-05-19'
+                }
+            }
+        ]
+        assert output == expected_output
+
+
+    def test_get_genomes_by_keyword_release_unspecified(self):
+        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Sus scrofa', 0)]
+        expected_output = [
+            {
+                'genomeUuid': '3c52097a-fb69-11eb-8dac-005056b32883',
+                'assembly': {
+                    'accession': 'test accession',
+                    'name': 'test name',
+                    'level': 'test level'
+                },
+                'taxon': {
+                    'taxonomyId': 9823,
+                    'scientificName': 'Sus scrofa'
+                },
+                'created': '2021-07-19 13:22:26',
+                'organism': {
+                    'displayName': 'Sus scrofa (Pig) - GCA_000003025.6',
+                    'scientificName': 'Sus scrofa',
+                    'urlName': 'Sus_scrofa_GCA_000003025.6',
+                    'ensemblName': 'sus_scrofa_gca000003025v6'
+                },
+                'release': {
+                    'releaseVersion': 24,
+                    'releaseDate': '2021-06-30',
+                    'isCurrent': True
+                }
+            }
+        ]
+        assert output == expected_output
+
+
+    def test_get_genomes_by_keyword_null(self):
+        output = list(service.get_genomes_by_keyword_iterator(self.engine, None, 0))
+        assert output == [ensembl_metadata_pb2.Genome()]
+
+
+    def test_get_genomes_by_name(self):
+        output = json_format.MessageToJson(service.get_genome_by_name(self.engine, 'balaenoptera_musculus', 'vertebrates', 1))
+        expected_output = {
+            "genomeUuid": "3c4cec7f-fb69-11eb-8dac-005056b32883",
+            "assembly": {
+                "accession": "GCA_009873245.2",
+                "name": "mBalMus1.v2",
+                "level": "chromosome"
+            },
+            "taxon": {
+                "taxonomyId": 9771,
+                "scientificName": "Balaenoptera musculus"
+            },
+            "created": "2020-05-01 13:28:33",
+            "organism": {
+                "displayName": "Balaenoptera musculus (Blue whale) - GCA_009873245.2",
+                "scientificName": "Balaenoptera musculus",
+                "urlName": "Balaenoptera_musculus_GCA_009873245.2",
+                "ensemblName": "balaenoptera_musculus"
+            },
+            "release": {
+                "releaseVersion": 1,
+                "releaseDate": "2020-06-04"
+            }
+        }
+        assert json.loads(output) == expected_output

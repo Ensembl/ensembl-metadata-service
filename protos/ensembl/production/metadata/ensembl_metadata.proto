@@ -10,6 +10,9 @@ service EnsemblMetadata {
   // Retrieve genome by its UUID.
   rpc GetGenomeByUUID(GenomeUUIDRequest) returns (Genome) {}
 
+  // Retrieve genomes by keyword search
+  rpc GetGenomesByKeyword(GenomeByKeywordRequest) returns (stream Genome) {}
+
   // Get species information for a genome UUID
   rpc GetSpeciesInformation(GenomeUUIDRequest) returns (Species) {}
 
@@ -56,6 +59,9 @@ message Genome {
   bool is_current = 5;
   Assembly assembly = 6;
   Taxon taxon = 7;
+  string created = 8;
+  Organism organism = 9;
+  Release release = 10;
 }
 
 message Karyotype {
@@ -143,6 +149,14 @@ message Release {
   string site_uri = 7;
 }
 
+message Organism {
+  string display_name = 1;
+  string strain = 2;
+  string scientific_name = 3;
+  string url_name = 4;
+  string ensembl_name = 5;
+}
+
 /*
 Wrapper for a list of DatasetInfo objects
 */
@@ -184,9 +198,20 @@ receive a non-empty response, so this is indicated with a comment.
 
 /*
 Genome UUID filter.
+If release_version is not given, the current version is used.
  */
 message GenomeUUIDRequest {
   string genome_uuid = 1; // Mandatory
+  uint32 release_version = 2; // Optional
+}
+
+/*
+Genome keyword filter.
+If release_version is not given, the current version is used.
+ */
+message GenomeByKeywordRequest {
+  string keyword = 1; // Mandatory
+  uint32 release_version = 2; // Optional
 }
 
 /*
