@@ -302,18 +302,17 @@ def get_genomes_by_keyword_iterator(metadata_db, keyword, release_version):
         release = sqlalchemy_md.tables['ensembl_release']
         assembly = sqlalchemy_md.tables['assembly']
         organism = sqlalchemy_md.tables['organism']
-        site = sqlalchemy_md.tables['ensembl_site']
 
         genome_query = get_genome_query(genome, release, assembly, organism).select_from(genome).outerjoin(assembly)\
             .outerjoin(organism)\
             .outerjoin(genome_release)\
-            .outerjoin(release)\
-            .outerjoin(site).where(or_(assembly.c.tolid == keyword,
-                                       assembly.c.accession == keyword,
-                                       assembly.c.name == keyword,
-                                       organism.c.scientific_name == keyword,
-                                       organism.c.scientific_parlance_name == keyword,
-                                       organism.c.species_taxonomy_id == keyword))
+            .outerjoin(release) \
+            .where(or_(assembly.c.tolid == keyword,
+                       assembly.c.accession == keyword,
+                       assembly.c.name == keyword,
+                       organism.c.scientific_name == keyword,
+                       organism.c.scientific_parlance_name == keyword,
+                       organism.c.species_taxonomy_id == keyword))
         if release_version == 0:
             genome_query = genome_query.where(release.c.is_current == 1)
         else:
