@@ -15,6 +15,8 @@
 """
 Unit tests for service module
 """
+import datetime
+
 import sqlalchemy as db
 import json
 from google.protobuf import json_format
@@ -52,6 +54,7 @@ class TestClass:
         """Test service.create_genome function"""
         input_dict = {
             'genome_uuid': 'f9d8c1dc-45dd-11ec-81d3-0242ac130003',
+            'created': datetime.date(2022, 8, 15),
             'ensembl_name':  'some name',
             'url_name': 'http://url_name.com',
             'display_name': 'Display Name',
@@ -63,24 +66,37 @@ class TestClass:
             'taxonomy_id': 1234,
             'scientific_name': 'scientific name',
             'scientific_parlance_name': 'scientific_parlance_name',
-            'strain': 'test strain'
+            'strain': 'test strain',
+            'release_version': 1,
+            'release_date': datetime.date(2022, 8, 15),
+            'release_label': 'release_label'
         }
         expected_output = {
-            'genomeUuid': 'f9d8c1dc-45dd-11ec-81d3-0242ac130003',
-            'ensemblName': 'some name',
-            'urlName': 'http://url_name.com',
-            'displayName': 'Display Name',
-            'isCurrent': True,
-            'assembly' : {
+            'assembly': {
                 'accession': 'X.AE500',
+                'level': 'level',
                 'name': 'assembly name',
-                'ucscName': 'ucsc name',
-                'level': 'level'
+                'ucscName': 'ucsc name'
+            },
+            'created': '2022-08-15',
+            'genomeUuid': 'f9d8c1dc-45dd-11ec-81d3-0242ac130003',
+            'organism': {
+                'displayName': 'Display Name',
+                'ensemblName': 'some name',
+                'scientificName': 'scientific name',
+                'strain': 'test strain',
+                'urlName': 'http://url_name.com'
+            },
+            'release': {
+                'isCurrent': True,
+                'releaseDate': '2022-08-15',
+                'releaseLabel': 'release_label',
+                'releaseVersion': 1
             },
             'taxon': {
-                'taxonomyId': 1234,
                 'scientificName': 'scientific name',
-                'strain': 'test strain'
+                'strain': 'test strain',
+                'taxonomyId': 1234
             }
         }
         output = json_format.MessageToJson(service.create_genome(input_dict))
