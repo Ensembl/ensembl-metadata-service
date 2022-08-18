@@ -52,11 +52,11 @@ def get_karyotype_information(metadata_db, genome_uuid):
     assembly = db.Table('assembly', md, autoload_with=metadata_db)
     assembly_sequence = db.Table('assembly_sequence', md, autoload_with=metadata_db)
     karyotype_info = db.select([
-        assembly.c.level,
-        assembly_sequence.c.chromosomal,
-        assembly_sequence.c.sequence_location,
+            assembly.c.level,
+            assembly_sequence.c.chromosomal,
+            assembly_sequence.c.sequence_location,
     ]).where(genome.c.genome_uuid == genome_uuid) \
-        .where(genome.c.assembly_id == assembly_sequence.c.assembly_id) \
+        .where(genome.c.assembly_id == assembly_sequence.c.assembly_id)\
         .where(assembly_sequence.c.assembly_id == assembly.c.assembly_id)
 
     karyotype_results = session.execute(karyotype_info).all()
@@ -81,10 +81,10 @@ def get_top_level_statistics(metadata_db, organism_id):
     attribute = db.Table('attribute', md, autoload_with=metadata_db)
 
     stats_info = db.select([
-        dataset_attribute.c.type,
-        dataset_attribute.c.value,
-        attribute.c.name,
-        attribute.c.label
+            dataset_attribute.c.type,
+            dataset_attribute.c.value,
+            attribute.c.name,
+            attribute.c.label
     ]).select_from(genome).select_from(genome_dataset).select_from(dataset_attribute) \
         .where(genome.c.organism_id == organism_id) \
         .where(genome.c.genome_id == genome_dataset.c.genome_id) \
@@ -119,14 +119,14 @@ def get_assembly_information(metadata_db, assembly_id):
     assembly = db.Table('assembly', md, autoload_with=metadata_db)
     assembly_sequence = db.Table('assembly_sequence', md, autoload_with=metadata_db)
     assembly_info = db.select([
-        assembly.c.accession,
-        assembly.c.level,
-        assembly.c.name,
-        assembly_sequence.c.chromosomal,
-        assembly_sequence.c.length,
-        assembly_sequence.c.sequence_location,
-        assembly_sequence.c.sequence_checksum,
-        assembly_sequence.c.ga4gh_identifier
+            assembly.c.accession,
+            assembly.c.level,
+            assembly.c.name,
+            assembly_sequence.c.chromosomal,
+            assembly_sequence.c.length,
+            assembly_sequence.c.sequence_location,
+            assembly_sequence.c.sequence_checksum,
+            assembly_sequence.c.ga4gh_identifier
     ]).where(assembly.c.assembly_id == assembly_sequence.c.assembly_id)
 
     assembly_results = session.execute(assembly_info).all()
@@ -150,15 +150,15 @@ def get_species_information(metadata_db, taxonomy_db, genome_uuid):
     organism = md.tables['organism']
 
     genome_select = db.select(
-        organism.c.ensembl_name,
-        organism.c.display_name,
-        organism.c.taxonomy_id,
-        organism.c.scientific_name,
-        organism.c.strain,
-        organism.c.scientific_parlance_name
-    ).select_from(genome).filter_by(
-        genome_uuid=genome_uuid
-    ).join(organism)
+            organism.c.ensembl_name,
+            organism.c.display_name,
+            organism.c.taxonomy_id,
+            organism.c.scientific_name,
+            organism.c.strain,
+            organism.c.scientific_parlance_name
+        ).select_from(genome).filter_by(
+            genome_uuid=genome_uuid
+        ).join(organism)
 
     species_results = session.execute(genome_select).all()
     if len(species_results) == 1:
@@ -202,11 +202,11 @@ def get_sub_species_info(metadata_db, organism_id):
     organism_group = db.Table('organism_group', md, autoload_with=metadata_db)
 
     sub_species_select = db.select(
-        organism_group.c.type,
-        organism_group.c.name,
-    ).select_from(organism_group_member).filter_by(
-        organism_id=organism_id
-    ).join(organism_group)
+            organism_group.c.type,
+            organism_group.c.name,
+        ).select_from(organism_group_member).filter_by(
+            organism_id=organism_id
+        ).join(organism_group)
 
     sub_species_results = session.execute(sub_species_select).fetchall()
     species_name = []
@@ -237,11 +237,11 @@ def get_grouping_info(metadata_db, organism_id):
     organism_group = db.Table('organism_group', md, autoload_with=metadata_db)
 
     grouping_select = db.select(
-        organism_group.c.type,
-        organism_group.c.name,
-    ).select_from(organism_group_member).filter_by(
-        organism_id=organism_id
-    ).join(organism_group)
+            organism_group.c.type,
+            organism_group.c.name,
+        ).select_from(organism_group_member).filter_by(
+            organism_id=organism_id
+        ).join(organism_group)
 
     grouping_results = session.execute(grouping_select).all()
 
@@ -278,7 +278,6 @@ def get_genome_by_uuid(metadata_db, genome_uuid, release_version):
     genome_query = get_genome_query(genome, release, assembly, organism).select_from(genome).join(assembly)\
         .join(organism).outerjoin(genome_release).outerjoin(release)\
         .where(genome.c.genome_uuid == genome_uuid)
-    ## TODO test that those outer joins are working properly
 
     if release_version == 0:
         genome_query = genome_query.where(release.c.is_current == 1)
@@ -401,14 +400,14 @@ def genome_sequence_iterator(metadata_db, genome_uuid, chromosomal_only):
     assembly_sequence = db.Table('assembly_sequence', md, autoload_with=metadata_db)
 
     seq_select = db.select(
-        assembly_sequence.c.accession,
-        assembly_sequence.c.name,
-        assembly_sequence.c.sequence_location,
-        assembly_sequence.c.length,
-        assembly_sequence.c.chromosomal
-    ).select_from(genome).filter_by(
-        genome_uuid=genome_uuid
-    ).join(assembly).join(assembly_sequence)
+            assembly_sequence.c.accession,
+            assembly_sequence.c.name,
+            assembly_sequence.c.sequence_location,
+            assembly_sequence.c.length,
+            assembly_sequence.c.chromosomal
+        ).select_from(genome).filter_by(
+            genome_uuid=genome_uuid
+        ).join(assembly).join(assembly_sequence)
     if chromosomal_only == 1:
         seq_select = seq_select.filter_by(chromosomal=True)
 
@@ -426,14 +425,14 @@ def release_iterator(metadata_db, site_name, release_version, current_only):
     site = md.tables['ensembl_site']
 
     release_select = db.select(
-        release.c.version.label('release_version'),
-        db.cast(release.c.release_date, db.String),
-        release.c.label.label('release_label'),
-        release.c.is_current,
-        site.c.name.label('site_name'),
-        site.c.label.label('site_label'),
-        site.c.uri.label('site_uri')
-    ).select_from(release)
+            release.c.version.label('release_version'),
+            db.cast(release.c.release_date, db.String),
+            release.c.label.label('release_label'),
+            release.c.is_current,
+            site.c.name.label('site_name'),
+            site.c.label.label('site_label'),
+            site.c.uri.label('site_uri')
+        ).select_from(release)
     if len(release_version) > 0:
         release_select = release_select.filter(release.c.version.in_(release_version))
     if current_only == 1:
@@ -464,16 +463,16 @@ def release_by_uuid_iterator(metadata_db, genome_uuid):
     site = md.tables['ensembl_site']
 
     release_select = db.select(
-        release.c.version.label('release_version'),
-        db.cast(release.c.release_date, db.String),
-        release.c.label.label('release_label'),
-        release.c.is_current,
-        site.c.name.label('site_name'),
-        site.c.label.label('site_label'),
-        site.c.uri.label('site_uri')
-    ).select_from(genome).filter_by(
-        genome_uuid=genome_uuid
-    ).join(genome_release).join(release).join(site)
+            release.c.version.label('release_version'),
+            db.cast(release.c.release_date, db.String),
+            release.c.label.label('release_label'),
+            release.c.is_current,
+            site.c.name.label('site_name'),
+            site.c.label.label('site_label'),
+            site.c.uri.label('site_uri')
+        ).select_from(genome).filter_by(
+            genome_uuid=genome_uuid
+        ).join(genome_release).join(release).join(site)
 
     release_results = session.execute(release_select).all()
 
@@ -599,7 +598,7 @@ def create_assembly(data=None):
 
 
 def create_genome(data=None):
-    if data is None or (isinstance(data, list) and len(data) != 1):
+    if data is None:
         return ensembl_metadata_pb2.Genome()
 
     assembly = ensembl_metadata_pb2.Assembly(
