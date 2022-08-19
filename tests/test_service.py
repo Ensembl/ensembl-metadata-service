@@ -535,3 +535,32 @@ class TestClass:
             }
         }
         assert json.loads(output) == expected_output
+
+    def test_get_genomes_by_name_release_unspecified(self):
+        output = json_format.MessageToJson(service.get_genome_by_name(self.engine, 'sus_scrofa_gca000003025v6', 'vertebrates', 0))
+        expected_output = {
+            'genomeUuid': '3c52097a-fb69-11eb-8dac-005056b32883',
+            'assembly': {
+                'accession': 'test accession',
+                'name': 'test name',
+                'level': 'test level'
+            },
+            'taxon': {
+                'taxonomyId': 9823,
+                'scientificName': 'Sus scrofa'
+            },
+            'created': '2021-07-19 13:22:26',
+            'organism': {
+                'displayName': 'Sus scrofa (Pig) - GCA_000003025.6',
+                'scientificName': 'Sus scrofa',
+                'scientificParlanceName': 'Sus scrofa',
+                'urlName': 'Sus_scrofa_GCA_000003025.6',
+                'ensemblName': 'sus_scrofa_gca000003025v6'
+            },
+            'release': {
+                'releaseVersion': 24,
+                'releaseDate': '2021-06-30',
+                'isCurrent': True
+            }
+        }
+        assert json.loads(output) == expected_output
