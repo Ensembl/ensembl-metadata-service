@@ -99,7 +99,7 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE `ensembl_release` (
 `release_id` INTEGER NOT NULL ,
-`version` INTEGER NOT NULL,
+`version` FLOAT NOT NULL,
 `release_date` date NOT NULL,
 `label` TEXT DEFAULT NULL,
 `is_current` tinyINTEGER NOT NULL,

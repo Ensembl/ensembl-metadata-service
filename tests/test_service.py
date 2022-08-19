@@ -84,6 +84,7 @@ class TestClass:
                 'displayName': 'Display Name',
                 'ensemblName': 'some name',
                 'scientificName': 'scientific name',
+                'scientificParlanceName': 'scientific_parlance_name',
                 'strain': 'test strain',
                 'urlName': 'http://url_name.com'
             },
@@ -376,7 +377,8 @@ class TestClass:
                 "displayName": "Balaenoptera musculus (Blue whale) - GCA_009873245.2",
                 "scientificName": "Balaenoptera musculus",
                 "urlName": "Balaenoptera_musculus_GCA_009873245.2",
-                "ensemblName": "balaenoptera_musculus"
+                "ensemblName": "balaenoptera_musculus",
+                "scientificParlanceName": "Balaenoptera musculus"
             },
             "release": {
                 "releaseVersion": 1,
@@ -403,6 +405,7 @@ class TestClass:
             "organism": {
                 "displayName": "Sus scrofa (Pig) - GCA_000003025.6",
                 "scientificName": "Sus scrofa",
+                "scientificParlanceName": "Sus scrofa",
                 "urlName": "Sus_scrofa_GCA_000003025.6",
                 "ensemblName": "sus_scrofa_gca000003025v6"
             },
@@ -436,7 +439,8 @@ class TestClass:
                     'displayName': 'Melitaea cinxia (alternate haplotype) - GCA_905220555.1',
                     'scientificName': 'Melitaea cinxia',
                     'urlName': 'Melitaea_cinxia_GCA_905220555.1',
-                    'ensemblName': 'melitaea_cinxia_gca905220555v1'
+                    'ensemblName': 'melitaea_cinxia_gca905220555v1',
+                    'scientificParlanceName': 'Melitaea cinxia'
                 },
                 'release': {
                     'releaseVersion': 22,
@@ -454,6 +458,7 @@ class TestClass:
                 'organism': {
                     'displayName': 'Melitaea cinxia (Glanville fritillary) - GCA_905220565.1',
                     'scientificName': 'Melitaea cinxia',
+                    'scientificParlanceName': 'Melitaea cinxia',
                     'urlName': 'Melitaea_cinxia_GCA_905220565.1',
                     'ensemblName': 'melitaea_cinxia_gca905220565v1'
                 },
@@ -484,6 +489,7 @@ class TestClass:
                 'organism': {
                     'displayName': 'Sus scrofa (Pig) - GCA_000003025.6',
                     'scientificName': 'Sus scrofa',
+                    'scientificParlanceName': 'Sus scrofa',
                     'urlName': 'Sus_scrofa_GCA_000003025.6',
                     'ensemblName': 'sus_scrofa_gca000003025v6'
                 },
@@ -519,6 +525,7 @@ class TestClass:
             "organism": {
                 "displayName": "Balaenoptera musculus (Blue whale) - GCA_009873245.2",
                 "scientificName": "Balaenoptera musculus",
+                "scientificParlanceName": "Balaenoptera musculus",
                 "urlName": "Balaenoptera_musculus_GCA_009873245.2",
                 "ensemblName": "balaenoptera_musculus"
             },

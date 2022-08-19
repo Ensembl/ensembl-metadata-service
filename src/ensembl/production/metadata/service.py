@@ -619,7 +619,8 @@ def create_genome(data=None):
         strain=data['strain'],
         scientific_name=data['scientific_name'],
         url_name=data['url_name'],
-        ensembl_name=data['ensembl_name']
+        ensembl_name=data['ensembl_name'],
+        scientific_parlance_name=data['scientific_parlance_name']
     )
 
     release = ensembl_metadata_pb2.Release(
