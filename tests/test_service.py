@@ -360,7 +360,7 @@ class TestClass:
         assert output == {}
 
     def test_get_genome_by_uuid(self):
-        output = json_format.MessageToJson(service.get_genome_by_uuid(self.engine, '3c4cec7f-fb69-11eb-8dac-005056b32883', 1))
+        output = json_format.MessageToJson(service.get_genome_by_uuid(self.engine, '3c4cec7f-fb69-11eb-8dac-005056b32883', 1.0))
         expected_output = {
             "genomeUuid": "3c4cec7f-fb69-11eb-8dac-005056b32883",
             "assembly": {
@@ -389,7 +389,7 @@ class TestClass:
 
 
     def test_genome_by_uuid_release_version_unspecified(self):
-        output = json_format.MessageToJson(service.get_genome_by_uuid(self.engine, '3c52097a-fb69-11eb-8dac-005056b32883', 0))
+        output = json_format.MessageToJson(service.get_genome_by_uuid(self.engine, '3c52097a-fb69-11eb-8dac-005056b32883', 0.0))
         expected_output = {
             "genomeUuid": "3c52097a-fb69-11eb-8dac-005056b32883",
             "assembly": {
@@ -425,7 +425,7 @@ class TestClass:
 
 
     def test_get_genomes_by_keyword(self):
-        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Melitaea cinxia', 22)]
+        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Melitaea cinxia', 22.0)]
         expected_output = [
             {
                 'genomeUuid': '3c520192-fb69-11eb-8dac-005056b32883',
@@ -472,7 +472,7 @@ class TestClass:
 
 
     def test_get_genomes_by_keyword_release_unspecified(self):
-        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Sus scrofa', 0)]
+        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Sus scrofa', 0.0)]
         expected_output = [
             {
                 'genomeUuid': '3c52097a-fb69-11eb-8dac-005056b32883',
@@ -509,7 +509,7 @@ class TestClass:
 
 
     def test_get_genomes_by_name(self):
-        output = json_format.MessageToJson(service.get_genome_by_name(self.engine, 'balaenoptera_musculus', 'vertebrates', 1))
+        output = json_format.MessageToJson(service.get_genome_by_name(self.engine, 'balaenoptera_musculus', 'vertebrates', 1.0))
         expected_output = {
             "genomeUuid": "3c4cec7f-fb69-11eb-8dac-005056b32883",
             "assembly": {
@@ -537,7 +537,7 @@ class TestClass:
         assert json.loads(output) == expected_output
 
     def test_get_genomes_by_name_release_unspecified(self):
-        output = json_format.MessageToJson(service.get_genome_by_name(self.engine, 'sus_scrofa_gca000003025v6', 'vertebrates', 0))
+        output = json_format.MessageToJson(service.get_genome_by_name(self.engine, 'sus_scrofa_gca000003025v6', 'vertebrates', 0.0))
         expected_output = {
             'genomeUuid': '3c52097a-fb69-11eb-8dac-005056b32883',
             'assembly': {
