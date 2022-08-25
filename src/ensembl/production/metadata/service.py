@@ -1,3 +1,4 @@
+import itertools
 from concurrent import futures
 import grpc
 import logging
@@ -316,14 +317,19 @@ def get_genomes_by_keyword_iterator(metadata_db, keyword, release_version):
         if release_version == 0:
             genome_query = genome_query.where(release.c.is_current == 1)
         else:
-            genome_query = genome_query.where(release.c.version == release_version)
+            genome_query = genome_query.where(release.c.version <= release_version)
         genome_results = session.execute(genome_query).all()
 
-        if not genome_results:
+        most_recent_genomes = []
+        for _, genome_release_group in itertools.groupby(genome_results, lambda r: r["assembly_accession"]):
+            most_recent_genome = sorted(genome_release_group, key=lambda g: g["release_version"], reverse=True)[0]
+            most_recent_genomes.append(most_recent_genome)
+
+        if not most_recent_genomes:
             yield create_genome()
         else:
-            for genome_result in genome_results:
-                yield create_genome(genome_result)
+            for genome_row in most_recent_genomes:
+                yield create_genome(genome_row)
 
 
 def get_genome_by_name(metadata_db, ensembl_name, site_name, release_version):

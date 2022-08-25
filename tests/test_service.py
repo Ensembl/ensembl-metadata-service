@@ -425,46 +425,27 @@ class TestClass:
 
 
     def test_get_genomes_by_keyword(self):
-        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Melitaea cinxia', 22.0)]
+        output = [json.loads(json_format.MessageToJson(response)) for response in service.get_genomes_by_keyword_iterator(self.engine, 'Melitaea cinxia', 23.0)]
         expected_output = [
             {
-                'genomeUuid': '3c520192-fb69-11eb-8dac-005056b32883',
                 'assembly': {},
-                'taxon': {
-                    'taxonomyId': 113334,
-                    'scientificName': 'Melitaea cinxia'
-                },
-                'created': '2021-06-08 18:28:11',
-                'organism': {
-                    'displayName': 'Melitaea cinxia (alternate haplotype) - GCA_905220555.1',
-                    'scientificName': 'Melitaea cinxia',
-                    'urlName': 'Melitaea_cinxia_GCA_905220555.1',
-                    'ensemblName': 'melitaea_cinxia_gca905220555v1',
-                    'scientificParlanceName': 'Melitaea cinxia'
-                },
-                'release': {
-                    'releaseVersion': 22,
-                    'releaseDate': '2021-05-19'
-                }
-            },
-            {
-                'genomeUuid': '3c52036e-fb69-11eb-8dac-005056b32883',
-                'assembly': {},
-                'taxon': {
-                    'taxonomyId': 113334,
-                    'scientificName': 'Melitaea cinxia'
-                },
                 'created': '2021-06-08 19:37:40',
+                'genomeUuid': '3c52036e-fb69-11eb-8dac-005056b32883',
                 'organism': {
-                    'displayName': 'Melitaea cinxia (Glanville fritillary) - GCA_905220565.1',
+                    'displayName': 'Melitaea cinxia (Glanville fritillary) - '
+                                   'GCA_905220565.1',
+                    'ensemblName': 'melitaea_cinxia_gca905220565v1',
                     'scientificName': 'Melitaea cinxia',
                     'scientificParlanceName': 'Melitaea cinxia',
-                    'urlName': 'Melitaea_cinxia_GCA_905220565.1',
-                    'ensemblName': 'melitaea_cinxia_gca905220565v1'
+                    'urlName': 'Melitaea_cinxia_GCA_905220565.1'
                 },
                 'release': {
-                    'releaseVersion': 22,
-                    'releaseDate': '2021-05-19'
+                    'releaseDate': '2021-06-17',
+                    'releaseVersion': 23.0
+                },
+                'taxon': {
+                    'scientificName': 'Melitaea cinxia',
+                    'taxonomyId': 113334
                 }
             }
         ]

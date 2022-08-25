@@ -53,15 +53,11 @@ which may or may not be in the current Ensembl release.
  */
 message Genome {
   string genome_uuid = 1;
-  string ensembl_name = 2;
-  string url_name = 3;
-  string display_name = 4;
-  bool is_current = 5;
-  Assembly assembly = 6;
-  Taxon taxon = 7;
-  string created = 8;
-  Organism organism = 9;
-  Release release = 10;
+  Assembly assembly = 2;
+  Taxon taxon = 3;
+  string created = 4;
+  Organism organism = 5;
+  Release release = 6;
 }
 
 message Karyotype {
