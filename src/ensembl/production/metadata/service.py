@@ -276,8 +276,8 @@ def get_genome_by_uuid(metadata_db, genome_uuid, release_version):
     assembly = sqlalchemy_md.tables['assembly']
     organism = sqlalchemy_md.tables['organism']
 
-    genome_query = get_genome_query(genome, release, assembly, organism).select_from(genome).join(assembly)\
-        .join(organism).outerjoin(genome_release).outerjoin(release)\
+    genome_query = get_genome_query(genome, genome_release, release, assembly, organism).select_from(genome)\
+        .join(assembly).join(organism).outerjoin(genome_release).outerjoin(release)\
         .where(genome.c.genome_uuid == genome_uuid)
 
     if release_version == 0:
@@ -304,7 +304,8 @@ def get_genomes_by_keyword_iterator(metadata_db, keyword, release_version):
         assembly = sqlalchemy_md.tables['assembly']
         organism = sqlalchemy_md.tables['organism']
 
-        genome_query = get_genome_query(genome, release, assembly, organism).select_from(genome).outerjoin(assembly)\
+        genome_query = get_genome_query(genome, genome_release, release, assembly, organism).select_from(genome)\
+            .outerjoin(assembly)\
             .outerjoin(organism)\
             .outerjoin(genome_release)\
             .outerjoin(release) \
@@ -348,8 +349,8 @@ def get_genome_by_name(metadata_db, ensembl_name, site_name, release_version):
     release = md.tables['ensembl_release']
     site = md.tables['ensembl_site']
 
-    genome_select = get_genome_query(genome, release, assembly, organism).select_from(genome).join(assembly)\
-        .join(organism).filter_by(ensembl_name=ensembl_name)
+    genome_select = get_genome_query(genome, genome_release, release, assembly, organism).select_from(genome).join(
+        assembly).join(organism).filter_by(ensembl_name=ensembl_name)
 
     if release_version == 0:
         genome_select = genome_select.join(genome_release).join(release).filter_by(
@@ -369,7 +370,7 @@ def get_genome_by_name(metadata_db, ensembl_name, site_name, release_version):
         return create_genome()
 
 
-def get_genome_query(genome, release, assembly, organism):
+def get_genome_query(genome, genome_release, release, assembly, organism):
     return db.select(
         genome.c.genome_uuid,
         genome.c.created,
@@ -388,7 +389,7 @@ def get_genome_query(genome, release, assembly, organism):
         release.c.release_date,
         release.c.label.label('release_label'),
         release.c.is_current
-    )
+    ).where(genome_release.c.is_current == 1)
 
 
 def genome_sequence_iterator(metadata_db, genome_uuid, chromosomal_only):
