@@ -486,7 +486,12 @@ class TestClass:
 
     def test_get_genomes_by_keyword_null(self):
         output = list(service.get_genomes_by_keyword_iterator(self.engine, None, 0))
-        assert output == [ensembl_metadata_pb2.Genome()]
+        assert output == []
+
+
+    def test_get_genomes_by_keyword_no_matches(self):
+        output = list(service.get_genomes_by_keyword_iterator(self.engine, "bigfoot", 1))
+        assert output == []
 
 
     def test_get_genomes_by_name(self):

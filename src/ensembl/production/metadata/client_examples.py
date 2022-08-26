@@ -25,7 +25,7 @@ def get_genome(stub, genome_request):
 
 def get_genomes_by_keyword(stub, genome_request):
     genome_uuids = [genome.genome_uuid for genome in stub.GetGenomesByKeyword(genome_request)]
-    if genome_uuids == ['']:
+    if not genome_uuids:
         print("No genomes")
         return
 

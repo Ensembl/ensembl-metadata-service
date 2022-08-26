@@ -292,45 +292,41 @@ def get_genome_by_uuid(metadata_db, genome_uuid, release_version):
 
 def get_genomes_by_keyword_iterator(metadata_db, keyword, release_version):
     if not keyword:
-        yield create_genome()
+        return
+    sqlalchemy_md = db.MetaData()
+    session = Session(metadata_db, future=True)
+
+    # Reflect existing tables, letting sqlalchemy load linked tables where possible.
+    genome = db.Table('genome', sqlalchemy_md, autoload_with=metadata_db)
+    genome_release = db.Table('genome_release', sqlalchemy_md, autoload_with=metadata_db)
+    release = sqlalchemy_md.tables['ensembl_release']
+    assembly = sqlalchemy_md.tables['assembly']
+    organism = sqlalchemy_md.tables['organism']
+
+    genome_query = get_genome_query(genome, genome_release, release, assembly, organism).select_from(genome)\
+        .outerjoin(assembly)\
+        .outerjoin(organism)\
+        .outerjoin(genome_release)\
+        .outerjoin(release) \
+        .where(or_(assembly.c.tolid == keyword,
+                   assembly.c.accession == keyword,
+                   assembly.c.name == keyword,
+                   organism.c.scientific_name == keyword,
+                   organism.c.scientific_parlance_name == keyword,
+                   organism.c.species_taxonomy_id == keyword))
+    if release_version == 0:
+        genome_query = genome_query.where(release.c.is_current == 1)
     else:
-        sqlalchemy_md = db.MetaData()
-        session = Session(metadata_db, future=True)
+        genome_query = genome_query.where(release.c.version <= release_version)
+    genome_results = session.execute(genome_query).all()
 
-        # Reflect existing tables, letting sqlalchemy load linked tables where possible.
-        genome = db.Table('genome', sqlalchemy_md, autoload_with=metadata_db)
-        genome_release = db.Table('genome_release', sqlalchemy_md, autoload_with=metadata_db)
-        release = sqlalchemy_md.tables['ensembl_release']
-        assembly = sqlalchemy_md.tables['assembly']
-        organism = sqlalchemy_md.tables['organism']
+    most_recent_genomes = []
+    for _, genome_release_group in itertools.groupby(genome_results, lambda r: r["assembly_accession"]):
+        most_recent_genome = sorted(genome_release_group, key=lambda g: g["release_version"], reverse=True)[0]
+        most_recent_genomes.append(most_recent_genome)
 
-        genome_query = get_genome_query(genome, genome_release, release, assembly, organism).select_from(genome)\
-            .outerjoin(assembly)\
-            .outerjoin(organism)\
-            .outerjoin(genome_release)\
-            .outerjoin(release) \
-            .where(or_(assembly.c.tolid == keyword,
-                       assembly.c.accession == keyword,
-                       assembly.c.name == keyword,
-                       organism.c.scientific_name == keyword,
-                       organism.c.scientific_parlance_name == keyword,
-                       organism.c.species_taxonomy_id == keyword))
-        if release_version == 0:
-            genome_query = genome_query.where(release.c.is_current == 1)
-        else:
-            genome_query = genome_query.where(release.c.version <= release_version)
-        genome_results = session.execute(genome_query).all()
-
-        most_recent_genomes = []
-        for _, genome_release_group in itertools.groupby(genome_results, lambda r: r["assembly_accession"]):
-            most_recent_genome = sorted(genome_release_group, key=lambda g: g["release_version"], reverse=True)[0]
-            most_recent_genomes.append(most_recent_genome)
-
-        if not most_recent_genomes:
-            yield create_genome()
-        else:
-            for genome_row in most_recent_genomes:
-                yield create_genome(genome_row)
+    for genome_row in most_recent_genomes:
+        yield create_genome(genome_row)
 
 
 def get_genome_by_name(metadata_db, ensembl_name, site_name, release_version):
