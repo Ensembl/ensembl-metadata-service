@@ -113,6 +113,45 @@ def get_top_level_statistics(metadata_db, organism_id):
     else:
         return create_top_level_statistics()
 
+def get_top_level_statistics_by_uuid(metadata_db, genome_uuid):
+    if genome_uuid is None:
+        return create_genome()
+    md = db.MetaData()
+    session = Session(metadata_db, future=True)
+
+    # Reflect existing tables, letting sqlalchemy load linked tables where possible.
+    genome = db.Table('genome', md, autoload_with=metadata_db)
+    genome_dataset = db.Table('genome_dataset', md, autoload_with=metadata_db)
+    dataset_attribute = db.Table('dataset_attribute', md, autoload_with=metadata_db)
+    attribute = db.Table('attribute', md, autoload_with=metadata_db)
+
+    stats_info = db.select([
+        attribute.c.type,
+        dataset_attribute.c.value,
+        attribute.c.name,
+        attribute.c.label
+    ]).select_from(genome).select_from(genome_dataset).select_from(dataset_attribute) \
+        .where(genome.c.genome_uuid == genome_uuid) \
+        .where(genome.c.genome_id == genome_dataset.c.genome_id) \
+        .where(genome_dataset.c.dataset_id == dataset_attribute.c.dataset_id) \
+        .where(dataset_attribute.c.attribute_id == attribute.c.attribute_id)
+
+    stats_results = session.execute(stats_info).all()
+    statistics = []
+    if len(stats_results) > 0:
+        for stat_type, stat_value, name, label in stats_results:
+            statistics.append({
+                'name': name,
+                'label': label,
+                'statistic_type': stat_type,
+                'statistic_value': stat_value
+            })
+        return create_top_level_statistics_by_uuid(({
+            'genome_uuid': genome_uuid,
+            'statistics': statistics
+        }))
+    else:
+        return create_top_level_statistics_by_uuid()
 
 def get_assembly_information(metadata_db, assembly_id):
     if assembly_id is None:
@@ -482,6 +521,7 @@ def get_genome_query(genome, genome_release, release, assembly, organism):
         organism.c.scientific_name,
         organism.c.strain,
         organism.c.scientific_parlance_name,
+        organism.c.organism_id,
         assembly.c.accession.label('assembly_accession'),
         assembly.c.name.label('assembly_name'),
         assembly.c.ucsc_name.label('assembly_ucsc_name'),
@@ -653,6 +693,14 @@ def create_top_level_statistics(data=None):
     )
     return species
 
+def create_top_level_statistics_by_uuid(data=None):
+    if data is None:
+        return ensembl_metadata_pb2.TopLevelStatistics()
+    species = ensembl_metadata_pb2.TopLevelStatistics(
+        genome_uuid=data['genome_uuid'],
+        statistics=data['statistics'],
+    )
+    return species
 
 def create_karyotype(data=None):
     if data is None:
@@ -731,7 +779,8 @@ def create_genome(data=None):
         scientific_name=data['scientific_name'],
         url_name=data['url_name'],
         ensembl_name=data['ensembl_name'],
-        scientific_parlance_name=data['scientific_parlance_name']
+        scientific_parlance_name=data['scientific_parlance_name'],
+        organism_id=data['organism_id']
     )
 
     release = ensembl_metadata_pb2.Release(
@@ -831,6 +880,9 @@ class EnsemblMetadataServicer(ensembl_metadata_pb2_grpc.EnsemblMetadataServicer)
 
     def GetTopLevelStatistics(self, request, context):
         return get_top_level_statistics(self.db, request.organism_id)
+        
+    def GetTopLevelStatisticsByUUID(self, request, context):
+        return get_top_level_statistics_by_uuid(self.db, request.genome_uuid)
 
     def GetGenomeByUUID(self, request, context):
         return get_genome_by_uuid(self.db,

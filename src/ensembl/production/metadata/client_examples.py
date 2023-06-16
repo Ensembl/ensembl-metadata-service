@@ -187,6 +187,12 @@ def get_top_level_statistics(stub):
     print('**** Top level statistics ****')
     print(releases1)
 
+def get_top_level_statistics_by_uuid(stub):
+    genome_request = GenomeUUIDRequest(genome_uuid='a73351f7-93e7-11ec-a39d-005056b38ce3')
+    toplevel_stats_by_uuid_request = stub.GetTopLevelStatisticsByUUID(genome_request)
+    print('**** Top level statistics by UUID ****')
+    print(toplevel_stats_by_uuid_request)
+
 
 def get_datasets_list_by_uuid(stub):
     request1 = DatasetsRequest(genome_uuid='a73351f7-93e7-11ec-a39d-005056b38ce3', release_version=2020.0)
@@ -217,6 +223,8 @@ def run():
         get_karyotype_information(stub)
         print("---------------Get Top Level Statistics-----------")
         get_top_level_statistics(stub)
+        print("---------------Get Top Level Statistics By UUID-----------")
+        get_top_level_statistics_by_uuid(stub)
         print("-------------- Get Genomes --------------")
         get_genomes(stub)
         print("-------------- List Sequences --------------")
@@ -233,4 +241,4 @@ def run():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    run()
+    run_tls()

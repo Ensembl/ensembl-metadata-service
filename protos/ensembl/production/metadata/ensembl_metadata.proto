@@ -45,6 +45,9 @@ service EnsemblMetadata {
   // Get top level statistics
   rpc GetTopLevelStatistics(OrganismIDRequest) returns (TopLevelStatistics) {}
 
+  // Get top level statistics by UUID
+  rpc GetTopLevelStatisticsByUUID(GenomeUUIDRequest) returns (TopLevelStatistics) {}
+
   // Retrieve genome by Ensembl name and site, and optionally release.
   rpc GetGenomeByName(GenomeNameRequest) returns (Genome) {}
 
@@ -119,7 +122,7 @@ message Grouping {
 }
 
 message TopLevelStatistics {
-  string organism_id = 1;
+  string genome_uuid = 1;
   message AttributeStatistics {
     string name = 2;
     string label = 3;
@@ -171,6 +174,7 @@ message Organism {
   string url_name = 4;
   string ensembl_name = 5;
   string scientific_parlance_name = 6;
+  uint32 organism_id = 7;
 }
 
 /*
