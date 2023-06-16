@@ -122,6 +122,17 @@ message Grouping {
 }
 
 message TopLevelStatistics {
+  string organism_id = 1;
+  message AttributeStatistics {
+    string name = 2;
+    string label = 3;
+    string statistic_type = 4;
+    string statistic_value = 5;
+  }
+  repeated AttributeStatistics statistics = 2;
+}
+
+message TopLevelStatisticsByUUID {
   string genome_uuid = 1;
   message AttributeStatistics {
     string name = 2;

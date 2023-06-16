@@ -695,8 +695,8 @@ def create_top_level_statistics(data=None):
 
 def create_top_level_statistics_by_uuid(data=None):
     if data is None:
-        return ensembl_metadata_pb2.TopLevelStatistics()
-    species = ensembl_metadata_pb2.TopLevelStatistics(
+        return ensembl_metadata_pb2.TopLevelStatisticsByUUID()
+    species = ensembl_metadata_pb2.TopLevelStatisticsByUUID(
         genome_uuid=data['genome_uuid'],
         statistics=data['statistics'],
     )
