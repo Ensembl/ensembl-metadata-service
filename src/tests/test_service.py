@@ -352,6 +352,24 @@ class TestClass:
             'statisticValue': '14547261565'
         }
 
+    def test_get_top_level_statistics_by_uuid(self):
+        output = json_format.MessageToJson(service.get_top_level_statistics_by_uuid(self.engine, 'a73356e1-93e7-11ec-a39d-005056b38ce3'))
+        output = json.loads(output)
+        print(output)
+        assert len(output['statistics']) == 106
+        assert output['statistics'][0] == {
+            'label': 'Contig N50',
+            'name': 'contig_n50',
+            'statisticType': 'bp',
+            'statisticValue': '51842'
+        }
+        assert output['statistics'][1] == {
+            'label': 'Total genome length',
+            'name': 'total_genome_length',
+            'statisticType': 'bp',
+            'statisticValue': '14547261565'
+        }
+
     def test_get_datasets_list_by_uuid(self):
 
         output = json_format.MessageToJson(
