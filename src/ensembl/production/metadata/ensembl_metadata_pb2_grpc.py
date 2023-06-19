@@ -2,7 +2,9 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from ensembl.production.metadata import ensembl_metadata_pb2 as ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2
+from ensembl.production.metadata import (
+    ensembl_metadata_pb2 as ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2,
+)
 
 
 class EnsemblMetadataStub(object):
@@ -19,85 +21,85 @@ class EnsemblMetadataStub(object):
             channel: A grpc.Channel.
         """
         self.GetGenomeByUUID = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetGenomeByUUID',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetGenomeByUUID",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
+        )
         self.GetGenomesByKeyword = channel.unary_stream(
-                '/ensembl_metadata.EnsemblMetadata/GetGenomesByKeyword',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeByKeywordRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetGenomesByKeyword",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeByKeywordRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
+        )
         self.GetGenomesByAssemblyAccessionID = channel.unary_stream(
-                '/ensembl_metadata.EnsemblMetadata/GetGenomesByAssemblyAccessionID',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyAccessionIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetGenomesByAssemblyAccessionID",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyAccessionIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
+        )
         self.GetSpeciesInformation = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetSpeciesInformation',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Species.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetSpeciesInformation",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Species.FromString,
+        )
         self.GetAssemblyInformation = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetAssemblyInformation',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyInfo.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetAssemblyInformation",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyInfo.FromString,
+        )
         self.GetSubSpeciesInformation = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetSubSpeciesInformation',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.SubSpecies.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetSubSpeciesInformation",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.SubSpecies.FromString,
+        )
         self.GetGroupingInformation = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetGroupingInformation',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Grouping.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetGroupingInformation",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Grouping.FromString,
+        )
         self.GetKaryotypeInformation = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetKaryotypeInformation',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Karyotype.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetKaryotypeInformation",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Karyotype.FromString,
+        )
         self.GetTopLevelStatistics = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetTopLevelStatistics',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetTopLevelStatistics",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.FromString,
+        )
         self.GetTopLevelStatisticsByUUID = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetTopLevelStatisticsByUUID',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetTopLevelStatisticsByUUID",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.FromString,
+        )
         self.GetGenomeByName = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetGenomeByName',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeNameRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetGenomeByName",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeNameRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
+        )
         self.GetRelease = channel.unary_stream(
-                '/ensembl_metadata.EnsemblMetadata/GetRelease',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.ReleaseRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetRelease",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.ReleaseRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.FromString,
+        )
         self.GetReleaseByUUID = channel.unary_stream(
-                '/ensembl_metadata.EnsemblMetadata/GetReleaseByUUID',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetReleaseByUUID",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.FromString,
+        )
         self.GetGenomeSequence = channel.unary_stream(
-                '/ensembl_metadata.EnsemblMetadata/GetGenomeSequence',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequenceRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequence.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetGenomeSequence",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequenceRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequence.FromString,
+        )
         self.GetDatasetsListByUUID = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetDatasetsListByUUID',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetsRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Datasets.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetDatasetsListByUUID",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetsRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Datasets.FromString,
+        )
         self.GetDatasetInformation = channel.unary_unary(
-                '/ensembl_metadata.EnsemblMetadata/GetDatasetInformation',
-                request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeDatatypeRequest.SerializeToString,
-                response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetInfos.FromString,
-                )
+            "/ensembl_metadata.EnsemblMetadata/GetDatasetInformation",
+            request_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeDatatypeRequest.SerializeToString,
+            response_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetInfos.FromString,
+        )
 
 
 class EnsemblMetadataServicer(object):
@@ -108,207 +110,192 @@ class EnsemblMetadataServicer(object):
     """
 
     def GetGenomeByUUID(self, request, context):
-        """Retrieve genome by its UUID.
-        """
+        """Retrieve genome by its UUID."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetGenomesByKeyword(self, request, context):
-        """Retrieve genomes by keyword search
-        """
+        """Retrieve genomes by keyword search"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetGenomesByAssemblyAccessionID(self, request, context):
-        """Retrieve all genomes for a give assembly accession ID
-        """
+        """Retrieve all genomes for a give assembly accession ID"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetSpeciesInformation(self, request, context):
-        """Get species information for a genome UUID
-        """
+        """Get species information for a genome UUID"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetAssemblyInformation(self, request, context):
-        """Get assembly information
-        """
+        """Get assembly information"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetSubSpeciesInformation(self, request, context):
-        """Get subspecies information
-        """
+        """Get subspecies information"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetGroupingInformation(self, request, context):
-        """Get grouping information
-        """
+        """Get grouping information"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetKaryotypeInformation(self, request, context):
-        """Get karyotype information
-        """
+        """Get karyotype information"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetTopLevelStatistics(self, request, context):
-        """Get top level statistics
-        """
+        """Get top level statistics"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetTopLevelStatisticsByUUID(self, request, context):
-        """Get top level statistics by UUID
-        """
+        """Get top level statistics by UUID"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetGenomeByName(self, request, context):
-        """Retrieve genome by Ensembl name and site, and optionally release.
-        """
+        """Retrieve genome by Ensembl name and site, and optionally release."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetRelease(self, request, context):
-        """Retrieve release details.
-        """
+        """Retrieve release details."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetReleaseByUUID(self, request, context):
-        """Retrieve release details for a genome.
-        """
+        """Retrieve release details for a genome."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetGenomeSequence(self, request, context):
-        """Retrieve sequence metadata for a genome's assembly.
-        """
+        """Retrieve sequence metadata for a genome's assembly."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetDatasetsListByUUID(self, request, context):
-        """Retrieve a list of dataset_ids associated with a genome UUID.
-        """
+        """Retrieve a list of dataset_ids associated with a genome UUID."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetDatasetInformation(self, request, context):
-        """Retrieve dataset info by genome uuid and dataset_type
-        """
+        """Retrieve dataset info by genome uuid and dataset_type"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_EnsemblMetadataServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetGenomeByUUID': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetGenomeByUUID,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
-            ),
-            'GetGenomesByKeyword': grpc.unary_stream_rpc_method_handler(
-                    servicer.GetGenomesByKeyword,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeByKeywordRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
-            ),
-            'GetGenomesByAssemblyAccessionID': grpc.unary_stream_rpc_method_handler(
-                    servicer.GetGenomesByAssemblyAccessionID,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyAccessionIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
-            ),
-            'GetSpeciesInformation': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetSpeciesInformation,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Species.SerializeToString,
-            ),
-            'GetAssemblyInformation': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetAssemblyInformation,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyInfo.SerializeToString,
-            ),
-            'GetSubSpeciesInformation': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetSubSpeciesInformation,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.SubSpecies.SerializeToString,
-            ),
-            'GetGroupingInformation': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetGroupingInformation,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Grouping.SerializeToString,
-            ),
-            'GetKaryotypeInformation': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetKaryotypeInformation,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Karyotype.SerializeToString,
-            ),
-            'GetTopLevelStatistics': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTopLevelStatistics,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.SerializeToString,
-            ),
-            'GetTopLevelStatisticsByUUID': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTopLevelStatisticsByUUID,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.SerializeToString,
-            ),
-            'GetGenomeByName': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetGenomeByName,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeNameRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
-            ),
-            'GetRelease': grpc.unary_stream_rpc_method_handler(
-                    servicer.GetRelease,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.ReleaseRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.SerializeToString,
-            ),
-            'GetReleaseByUUID': grpc.unary_stream_rpc_method_handler(
-                    servicer.GetReleaseByUUID,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.SerializeToString,
-            ),
-            'GetGenomeSequence': grpc.unary_stream_rpc_method_handler(
-                    servicer.GetGenomeSequence,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequenceRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequence.SerializeToString,
-            ),
-            'GetDatasetsListByUUID': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetDatasetsListByUUID,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetsRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Datasets.SerializeToString,
-            ),
-            'GetDatasetInformation': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetDatasetInformation,
-                    request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeDatatypeRequest.FromString,
-                    response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetInfos.SerializeToString,
-            ),
+        "GetGenomeByUUID": grpc.unary_unary_rpc_method_handler(
+            servicer.GetGenomeByUUID,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
+        ),
+        "GetGenomesByKeyword": grpc.unary_stream_rpc_method_handler(
+            servicer.GetGenomesByKeyword,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeByKeywordRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
+        ),
+        "GetGenomesByAssemblyAccessionID": grpc.unary_stream_rpc_method_handler(
+            servicer.GetGenomesByAssemblyAccessionID,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyAccessionIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
+        ),
+        "GetSpeciesInformation": grpc.unary_unary_rpc_method_handler(
+            servicer.GetSpeciesInformation,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Species.SerializeToString,
+        ),
+        "GetAssemblyInformation": grpc.unary_unary_rpc_method_handler(
+            servicer.GetAssemblyInformation,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyInfo.SerializeToString,
+        ),
+        "GetSubSpeciesInformation": grpc.unary_unary_rpc_method_handler(
+            servicer.GetSubSpeciesInformation,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.SubSpecies.SerializeToString,
+        ),
+        "GetGroupingInformation": grpc.unary_unary_rpc_method_handler(
+            servicer.GetGroupingInformation,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Grouping.SerializeToString,
+        ),
+        "GetKaryotypeInformation": grpc.unary_unary_rpc_method_handler(
+            servicer.GetKaryotypeInformation,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Karyotype.SerializeToString,
+        ),
+        "GetTopLevelStatistics": grpc.unary_unary_rpc_method_handler(
+            servicer.GetTopLevelStatistics,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.SerializeToString,
+        ),
+        "GetTopLevelStatisticsByUUID": grpc.unary_unary_rpc_method_handler(
+            servicer.GetTopLevelStatisticsByUUID,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.SerializeToString,
+        ),
+        "GetGenomeByName": grpc.unary_unary_rpc_method_handler(
+            servicer.GetGenomeByName,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeNameRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.SerializeToString,
+        ),
+        "GetRelease": grpc.unary_stream_rpc_method_handler(
+            servicer.GetRelease,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.ReleaseRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.SerializeToString,
+        ),
+        "GetReleaseByUUID": grpc.unary_stream_rpc_method_handler(
+            servicer.GetReleaseByUUID,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.SerializeToString,
+        ),
+        "GetGenomeSequence": grpc.unary_stream_rpc_method_handler(
+            servicer.GetGenomeSequence,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequenceRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequence.SerializeToString,
+        ),
+        "GetDatasetsListByUUID": grpc.unary_unary_rpc_method_handler(
+            servicer.GetDatasetsListByUUID,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetsRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Datasets.SerializeToString,
+        ),
+        "GetDatasetInformation": grpc.unary_unary_rpc_method_handler(
+            servicer.GetDatasetInformation,
+            request_deserializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeDatatypeRequest.FromString,
+            response_serializer=ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetInfos.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'ensembl_metadata.EnsemblMetadata', rpc_method_handlers)
+        "ensembl_metadata.EnsemblMetadata", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class EnsemblMetadata(object):
     """IMPORTANT: the directory structure of the protos directory should mirror the structure of the src directory to avoid
     Python import errors.
@@ -317,273 +304,465 @@ class EnsemblMetadata(object):
     """
 
     @staticmethod
-    def GetGenomeByUUID(request,
+    def GetGenomeByUUID(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetGenomeByUUID',
+            "/ensembl_metadata.EnsemblMetadata/GetGenomeByUUID",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetGenomesByKeyword(request,
+    def GetGenomesByKeyword(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/ensembl_metadata.EnsemblMetadata/GetGenomesByKeyword',
+            "/ensembl_metadata.EnsemblMetadata/GetGenomesByKeyword",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeByKeywordRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetGenomesByAssemblyAccessionID(request,
+    def GetGenomesByAssemblyAccessionID(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/ensembl_metadata.EnsemblMetadata/GetGenomesByAssemblyAccessionID',
+            "/ensembl_metadata.EnsemblMetadata/GetGenomesByAssemblyAccessionID",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyAccessionIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetSpeciesInformation(request,
+    def GetSpeciesInformation(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetSpeciesInformation',
+            "/ensembl_metadata.EnsemblMetadata/GetSpeciesInformation",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Species.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetAssemblyInformation(request,
+    def GetAssemblyInformation(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetAssemblyInformation',
+            "/ensembl_metadata.EnsemblMetadata/GetAssemblyInformation",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.AssemblyInfo.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetSubSpeciesInformation(request,
+    def GetSubSpeciesInformation(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetSubSpeciesInformation',
+            "/ensembl_metadata.EnsemblMetadata/GetSubSpeciesInformation",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.SubSpecies.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetGroupingInformation(request,
+    def GetGroupingInformation(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetGroupingInformation',
+            "/ensembl_metadata.EnsemblMetadata/GetGroupingInformation",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Grouping.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetKaryotypeInformation(request,
+    def GetKaryotypeInformation(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetKaryotypeInformation',
+            "/ensembl_metadata.EnsemblMetadata/GetKaryotypeInformation",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Karyotype.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetTopLevelStatistics(request,
+    def GetTopLevelStatistics(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetTopLevelStatistics',
+            "/ensembl_metadata.EnsemblMetadata/GetTopLevelStatistics",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.OrganismIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetTopLevelStatisticsByUUID(request,
+    def GetTopLevelStatisticsByUUID(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetTopLevelStatisticsByUUID',
+            "/ensembl_metadata.EnsemblMetadata/GetTopLevelStatisticsByUUID",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.TopLevelStatistics.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetGenomeByName(request,
+    def GetGenomeByName(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetGenomeByName',
+            "/ensembl_metadata.EnsemblMetadata/GetGenomeByName",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeNameRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Genome.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetRelease(request,
+    def GetRelease(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/ensembl_metadata.EnsemblMetadata/GetRelease',
+            "/ensembl_metadata.EnsemblMetadata/GetRelease",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.ReleaseRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetReleaseByUUID(request,
+    def GetReleaseByUUID(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/ensembl_metadata.EnsemblMetadata/GetReleaseByUUID',
+            "/ensembl_metadata.EnsemblMetadata/GetReleaseByUUID",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeUUIDRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Release.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetGenomeSequence(request,
+    def GetGenomeSequence(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/ensembl_metadata.EnsemblMetadata/GetGenomeSequence',
+            "/ensembl_metadata.EnsemblMetadata/GetGenomeSequence",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequenceRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeSequence.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetDatasetsListByUUID(request,
+    def GetDatasetsListByUUID(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetDatasetsListByUUID',
+            "/ensembl_metadata.EnsemblMetadata/GetDatasetsListByUUID",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetsRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.Datasets.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetDatasetInformation(request,
+    def GetDatasetInformation(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ensembl_metadata.EnsemblMetadata/GetDatasetInformation',
+            "/ensembl_metadata.EnsemblMetadata/GetDatasetInformation",
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.GenomeDatatypeRequest.SerializeToString,
             ensembl_dot_production_dot_metadata_dot_ensembl__metadata__pb2.DatasetInfos.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
