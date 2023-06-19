@@ -185,7 +185,6 @@ message Organism {
   string url_name = 4;
   string ensembl_name = 5;
   string scientific_parlance_name = 6;
-  uint32 organism_id = 7;
 }
 
 /*
