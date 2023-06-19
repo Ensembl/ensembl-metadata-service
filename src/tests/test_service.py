@@ -110,6 +110,7 @@ class TestClass:
             }
         }
         output = json_format.MessageToJson(service.create_genome(input_dict))
+        print (output)
         assert json.loads(output) == expected_output
 
     def test_create_assembly(self):
@@ -353,17 +354,17 @@ class TestClass:
         }
 
     def test_get_top_level_statistics_by_uuid(self):
-        output = json_format.MessageToJson(service.get_top_level_statistics_by_uuid(self.engine, 'a73356e1-93e7-11ec-a39d-005056b38ce3'))
+        output = json_format.MessageToJson(service.get_top_level_statistics_by_uuid(self.engine, 'a73357ab-93e7-11ec-a39d-005056b38ce3'))
         output = json.loads(output)
         print(output)
-        assert len(output['statistics']) == 106
+        assert len(output['statistics']) == 94
         assert output['statistics'][0] == {
             'label': 'Contig N50',
             'name': 'contig_n50',
             'statisticType': 'bp',
             'statisticValue': '51842'
         }
-        assert output['statistics'][1] == {
+        assert output['statistics'][2] == {
             'label': 'Total genome length',
             'name': 'total_genome_length',
             'statisticType': 'bp',
