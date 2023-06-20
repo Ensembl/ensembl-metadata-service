@@ -46,7 +46,7 @@ service EnsemblMetadata {
   rpc GetTopLevelStatistics(OrganismIDRequest) returns (TopLevelStatistics) {}
 
   // Get top level statistics by UUID
-  rpc GetTopLevelStatisticsByUUID(GenomeUUIDRequest) returns (TopLevelStatistics) {}
+  rpc GetTopLevelStatisticsByUUID(GenomeUUIDRequest) returns (TopLevelStatisticsByUUID) {}
 
   // Retrieve genome by Ensembl name and site, and optionally release.
   rpc GetGenomeByName(GenomeNameRequest) returns (Genome) {}
