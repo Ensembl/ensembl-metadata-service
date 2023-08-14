@@ -352,7 +352,7 @@ def get_genome_uuid(metadata_db, ensembl_name, assembly_name, use_default):
 
     genome_uuid_query = get_genome_uuid_query(genome, assembly, organism).select_from(genome) \
         .join(assembly).join(organism) \
-        .where(and_(func.lower(assembly.c.assembly_default if use_default == 1 else assembly.c.name) == assembly_name.lower(),
+        .where(and_(func.lower(assembly.c.assembly_default if use_default is True else assembly.c.name) == assembly_name.lower(),
                     func.lower(organism.c.ensembl_name) == ensembl_name.lower()))
 
     genome_uuid_result = session.execute(genome_uuid_query).all()
