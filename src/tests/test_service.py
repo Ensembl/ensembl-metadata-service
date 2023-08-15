@@ -503,9 +503,9 @@ class TestClass:
         output = json_format.MessageToJson(
             service.get_genome_uuid(
                 engine,
-                "homo_sapiens", "GRCh37.p13", True))
+                "homo_sapiens", "GRCh37.p13", False))
 
-        assert json.loads(output) == []
+        assert json.loads(output) == {}
 
     def test_get_genome_by_uuid(self, engine):
         output = json_format.MessageToJson(
