@@ -489,6 +489,16 @@ class TestClass:
         }
         assert json.loads(output) == expected_output
 
+    def test_get_genome_uuid_assembly_default(self, engine):
+        output = json_format.MessageToJson(
+            service.get_genome_uuid(
+                engine,
+                "homo_sapiens", "GRCh37", True))
+        expected_output = {
+            "genomeUuid": "3704ceb1-948d-11ec-a39d-005056b38ce3"
+        }
+        assert json.loads(output) == expected_output
+
     def test_get_genome_by_uuid(self, engine):
         output = json_format.MessageToJson(
             service.get_genome_by_uuid(engine,
@@ -634,62 +644,9 @@ class TestClass:
                            "taxon": {"scientificName": "Homo sapiens", "taxonomyId": 9606}}
         assert json.loads(output) == expected_output
 
-    def test_get_genomes_by_name_release_unspeci(self, engine):
-        output = json_format.MessageToJson(service.get_genome_by_name(engine, "homo_sapiens", "Ensembl", 0.0))
-        expected_output = {"assembly": {"accession": "GCA_000001405.28",
-                                        "ensemblName": "GRCh38.p13",
-                                        "level": "chromosome",
-                                        "name": "GRCh38.p13",
-                                        "ucscName": "hg38"},
-                           "created": "2023-05-12 13:30:58",
-                           "genomeUuid": "a7335667-93e7-11ec-a39d-005056b38ce3",
-                           "organism": {"displayName": "Human",
-                                        "ensemblName": "homo_sapiens",
-                                        "scientificName": "Homo sapiens",
-                                        "urlName": "Homo_sapiens"},
-                           "release": {"isCurrent": True,
-                                       "releaseDate": "2023-05-15",
-                                       "releaseLabel": "Beta Release 1",
-                                       "releaseVersion": 108.0},
-                           "taxon": {"scientificName": "Homo sapiens", "taxonomyId": 9606}}
-        assert json.loads(output) == expected_output
-
-        def test_get_genomes_by_name_release_unspec(self, engine):
-            output = json_format.MessageToJson(service.get_genome_by_name(engine, "homo_sapiens", "Ensembl", 0.0))
-            expected_output = {"assembly": {"accession": "GCA_000001405.28",
-                                            "ensemblName": "GRCh38.p13",
-                                            "level": "chromosome",
-                                            "name": "GRCh38.p13",
-                                            "ucscName": "hg38"},
-                               "created": "2023-05-12 13:30:58",
-                               "genomeUuid": "a7335667-93e7-11ec-a39d-005056b38ce3",
-                               "organism": {"displayName": "Human",
-                                            "ensemblName": "homo_sapiens",
-                                            "scientificName": "Homo sapiens",
-                                            "urlName": "Homo_sapiens"},
-                               "release": {"isCurrent": True,
-                                           "releaseDate": "2023-05-15",
-                                           "releaseLabel": "Beta Release 1",
-                                           "releaseVersion": 108.0},
-                               "taxon": {"scientificName": "Homo sapiens", "taxonomyId": 9606}}
-            assert json.loads(output) == expected_output
-
-        def test_get_genomes_by_name_release_unsp(self, engine):
-            output = json_format.MessageToJson(service.get_genome_by_name(engine, "homo_sapiens", "Ensembl", 0.0))
-            expected_output = {"assembly": {"accession": "GCA_000001405.28",
-                                            "ensemblName": "GRCh38.p13",
-                                            "level": "chromosome",
-                                            "name": "GRCh38.p13",
-                                            "ucscName": "hg38"},
-                               "created": "2023-05-12 13:30:58",
-                               "genomeUuid": "a7335667-93e7-11ec-a39d-005056b38ce3",
-                               "organism": {"displayName": "Human",
-                                            "ensemblName": "homo_sapiens",
-                                            "scientificName": "Homo sapiens",
-                                            "urlName": "Homo_sapiens"},
-                               "release": {"isCurrent": True,
-                                           "releaseDate": "2023-05-15",
-                                           "releaseLabel": "Beta Release 1",
-                                           "releaseVersion": 108.0},
-                               "taxon": {"scientificName": "Homo sapiens", "taxonomyId": 9606}}
-            assert json.loads(output) == expected_output
+    def test_get_genome_uuid_assembly_default_empty(self, engine):
+        output = json_format.MessageToJson(
+            service.get_genome_uuid(
+                engine,
+                "homo_sapiens", "GRCh37.p13", True))
+        assert json.loads(output) == {}
