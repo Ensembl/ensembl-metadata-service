@@ -649,11 +649,5 @@ class TestClass:
             service.get_genome_uuid(
                 engine,
                 "homo_sapiens", "GRCh37.p13", True))
-        assert json.loads(output) == {}
-
-    def test_get_genome_uuid_assembly_defaul(self, engine):
-        output = json_format.MessageToJson(
-            service.get_genome_uuid(
-                engine,
-                "homo_sapiens", "GRCh37.p13", True))
-        assert json.loads(output) == {}
+        output = json.loads(output)
+        assert output == {}
