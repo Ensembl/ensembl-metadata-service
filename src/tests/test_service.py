@@ -505,7 +505,7 @@ class TestClass:
                 engine,
                 "homo_sapiens", "GRCh37.p13", False))
 
-        assert json.loads(output) == {}
+        assert json.loads(output) == {'test'}
 
     def test_get_genome_by_uuid(self, engine):
         output = json_format.MessageToJson(
