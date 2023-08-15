@@ -499,7 +499,6 @@ class TestClass:
         }
         assert json.loads(output) == expected_output
 
-
     def test_get_genome_uuid_assembly_defaul(self, engine):
         output = json_format.MessageToJson(
             service.get_genome_uuid(
