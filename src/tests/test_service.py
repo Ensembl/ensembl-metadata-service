@@ -644,3 +644,10 @@ class TestClass:
                            "taxon": {"scientificName": "Homo sapiens", "taxonomyId": 9606}}
         assert json.loads(output) == expected_output
 
+    def test_get_genome_uuid_assembly_default_empty(self, engine):
+        output = json_format.MessageToJson(
+            service.get_genome_uuid(
+                engine,
+                "homo_sapiens", "GRCh37.p13", True))
+        output = json.loads(output)
+        assert output == {}
