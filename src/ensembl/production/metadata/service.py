@@ -818,8 +818,6 @@ def create_genome(data=None):
     if data is None:
         return ensembl_metadata_pb2.Genome()
 
-    print(f"data['assembly_name'] ====> {data['assembly_name']}")
-    print(f"data['assembly_ensembl_name'] ====> {data['assembly_ensembl_name']}")
     assembly = ensembl_metadata_pb2.Assembly(
         accession=data["assembly_accession"],
         name=data["assembly_name"],
