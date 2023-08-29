@@ -182,13 +182,12 @@ message Release {
 }
 
 message Organism {
-  string display_name = 1;
+  string common_name = 1;
   string strain = 2;
   string scientific_name = 3;
-  string url_name = 4;
-  string ensembl_name = 5;
-  string scientific_parlance_name = 6;
-  string organism_uuid = 7;
+  string ensembl_name = 4;
+  string scientific_parlance_name = 5;
+  string organism_uuid = 6;
 }
 
 /*

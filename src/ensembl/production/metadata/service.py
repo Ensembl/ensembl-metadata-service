@@ -231,7 +231,7 @@ def get_species_information(metadata_db, taxonomy_db, genome_uuid):
 
         genome_select = db.select(
             organism.c.ensembl_name,
-            organism.c.display_name,
+            organism.c.common_name,
             organism.c.taxonomy_id,
             organism.c.scientific_name,
             organism.c.strain,
@@ -415,7 +415,7 @@ def get_genomes_by_keyword_iterator(metadata_db, keyword, release_version):
                        func.lower(assembly.c.accession) == keyword.lower(),
                        func.lower(assembly.c.name) == keyword.lower(),
                        func.lower(assembly.c.ensembl_name) == keyword.lower(),
-                       func.lower(organism.c.display_name) == keyword.lower(),
+                       func.lower(organism.c.common_name) == keyword.lower(),
                        func.lower(organism.c.scientific_name) == keyword.lower(),
                        func.lower(organism.c.scientific_parlance_name) == keyword.lower(),
                        func.lower(organism.c.species_taxonomy_id) == keyword.lower()))
@@ -553,8 +553,7 @@ def get_genome_query(genome, genome_release, release, assembly, organism):
         genome.c.genome_uuid,
         genome.c.created,
         organism.c.ensembl_name,
-        organism.c.url_name,
-        organism.c.display_name,
+        organism.c.common_name,
         organism.c.taxonomy_id,
         organism.c.scientific_name,
         organism.c.strain,
@@ -817,6 +816,8 @@ def create_genome(data=None):
     if data is None:
         return ensembl_metadata_pb2.Genome()
 
+    print(f"data['assembly_name'] ====> {data['assembly_name']}")
+    print(f"data['assembly_ensembl_name'] ====> {data['assembly_ensembl_name']}")
     assembly = ensembl_metadata_pb2.Assembly(
         accession=data["assembly_accession"],
         name=data["assembly_name"],
@@ -833,10 +834,9 @@ def create_genome(data=None):
     # TODO: fetch common_name(s) from ncbi_taxonomy database
 
     organism = ensembl_metadata_pb2.Organism(
-        display_name=data["display_name"],
+        common_name=data["common_name"],
         strain=data["strain"],
         scientific_name=data["scientific_name"],
-        url_name=data["url_name"],
         ensembl_name=data["ensembl_name"],
         scientific_parlance_name=data["scientific_parlance_name"],
     )
