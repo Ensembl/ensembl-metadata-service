@@ -385,8 +385,10 @@ def get_genome_by_uuid(metadata_db, genome_uuid, release_version):
 
         if release_version == 0:
             genome_query = genome_query.where(release.c.is_current == 1)
-        else:
+        elif release_version > 0:
             genome_query = genome_query.where(release.c.version == release_version)
+        # FYI: if release_version is set to -1 in the request the endpoint will fetch unreleased genomes too
+
         genome_results = session.execute(genome_query).all()
         if len(genome_results) == 1:
             return create_genome(genome_results[0])
@@ -568,7 +570,7 @@ def get_genome_query(genome, genome_release, release, assembly, organism):
         release.c.release_date,
         release.c.label.label("release_label"),
         release.c.is_current,
-    ).where(genome_release.c.is_current == 1)
+    )  # .where(genome_release.c.is_current == 1)
 
 
 def get_genome_uuid_query(genome, assembly, organism):
