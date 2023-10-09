@@ -187,7 +187,7 @@ def get_sub_species_info(stub):
 
 
 def get_karyotype_information(stub):
-    request1 = GenomeUUIDRequest(genome_uuid="a7335667-93e7-11ec-a39d-005056b38ce3")
+    request1 = GenomeUUIDRequest(genome_uuid="9caa2cae-d1c8-4cfc-9ffd-2e13bc3e95b1")
     releases1 = stub.GetKaryotypeInformation(request1)
     print("**** Karyotype ****")
     print(releases1)

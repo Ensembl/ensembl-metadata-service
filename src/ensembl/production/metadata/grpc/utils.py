@@ -36,10 +36,12 @@ def get_karyotype_information(db_conn, genome_uuid):
         return create_karyotype()
 
     karyotype_info_result = db_conn.fetch_sequences(
-        genome_uuid=genome_uuid
+        genome_uuid=genome_uuid,
+        get_karyotype=True
     )
     # Wow! this returns 109583 rows for 'a7335667-93e7-11ec-a39d-005056b38ce3'
-    # TODO: Understand what's going on
+    # TODO: Understand what's going on -> Fix: DISTINCT + necessary cols only
+    # Next question do we suppose to return more than one? (2 or 3..)
     if len(karyotype_info_result) == 1:
         return create_karyotype(karyotype_info_result[0])
 

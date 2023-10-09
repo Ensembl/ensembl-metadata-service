@@ -88,10 +88,13 @@ class TestClass:
         assert json.loads(output) == expected_output
 
     def test_create_karyotype(self, multi_dbs, genome_db_conn):
-        input_data = genome_db_conn.fetch_sequences(genome_uuid="a7335667-93e7-11ec-a39d-005056b38ce3")
+        input_data = genome_db_conn.fetch_sequences(
+            genome_uuid="a7335667-93e7-11ec-a39d-005056b38ce3",
+            get_karyotype=True
+        )
         expected_output = {
             "code": "chromosome",
-            "chromosomal": "0",
+            "chromosomal": "1",
             "location": "SO:0000738",
             "genomeUuid": "a7335667-93e7-11ec-a39d-005056b38ce3"
         }

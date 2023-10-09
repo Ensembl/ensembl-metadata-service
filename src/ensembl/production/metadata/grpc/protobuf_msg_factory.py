@@ -54,10 +54,10 @@ def create_karyotype(data=None):
         return ensembl_metadata_pb2.Karyotype()
 
     karyotype = ensembl_metadata_pb2.Karyotype(
-        genome_uuid=data.Genome.genome_uuid,
-        code=data.Assembly.level,
-        chromosomal=str(data.AssemblySequence.chromosomal),
-        location=data.AssemblySequence.sequence_location,
+        genome_uuid=data["genome_uuid"],
+        code=data["level"],
+        chromosomal=str(data["chromosomal"]),
+        location=data["sequence_location"],
     )
     return karyotype
 

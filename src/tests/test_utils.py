@@ -34,8 +34,15 @@ class TestUtils:
 
     def test_get_karyotype_information(self, genome_db_conn):
         output = json_format.MessageToJson(
-            utils.get_karyotype_information(genome_db_conn, "3c4cec7f-fb69-11eb-8dac-005056b32883"))
-        expected_output = {}
+            utils.get_karyotype_information(
+                db_conn=genome_db_conn, genome_uuid="a73351f7-93e7-11ec-a39d-005056b38ce3"
+            ))
+        expected_output = {
+          "code": "chromosome",
+          "chromosomal": "1",
+          "location": "SO:0000738",
+          "genomeUuid": "a73351f7-93e7-11ec-a39d-005056b38ce3"
+        }
         assert json.loads(output) == expected_output
 
     def test_get_assembly_information(self, genome_db_conn):
