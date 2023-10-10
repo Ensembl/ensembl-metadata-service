@@ -128,14 +128,13 @@ def list_genome_assembly_sequences(stub):
 
 def list_genome_assembly_sequences_region(stub):
     request1 = GenomeAssemblySequenceRegionRequest(
-        genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
-        sequence_region_name="3",
+        genome_uuid="9caa2cae-d1c8-4cfc-9ffd-2e13bc3e95b1",
+        sequence_region_name="HG03540#1#h1tg000001l",
         chromosomal_only=False
     )
     genome_assembly_sequences_region1 = stub.GetGenomeAssemblySequenceRegion(request1)
     print("**** Chromosomal and non-chromosomal ****")
-    for seq in genome_assembly_sequences_region1:
-        print(seq)
+    print(genome_assembly_sequences_region1)
 
     request2 = GenomeAssemblySequenceRegionRequest(
         genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
@@ -144,8 +143,7 @@ def list_genome_assembly_sequences_region(stub):
     )
     genome_assembly_sequences_region2 = stub.GetGenomeAssemblySequenceRegion(request2)
     print("**** Chromosomal_only ****")
-    for seq in genome_assembly_sequences_region2:
-        print(seq)
+    print(genome_assembly_sequences_region2)
 
 
 def list_releases(stub):
@@ -311,42 +309,42 @@ def get_organisms_group_count(stub):
 def run():
     with grpc.insecure_channel("localhost:50051") as channel:
         stub = ensembl_metadata_pb2_grpc.EnsemblMetadataStub(channel)
-        print("---------------Get Species Information-----------")
-        get_species_information_by_uuid(stub)
-        print("---------------Get Assembly Information-----------")
-        get_assembly_information(stub)
-        print(
-            "---------------Get Genome Information from assembly accession-----------"
-        )
-        get_genomes_by_assembly_accession(stub)
-        print("---------------Get Subspecies Information-----------")
-        get_sub_species_info(stub)
-        print("---------------Get Karyotype Information-----------")
-        get_karyotype_information(stub)
-        print("---------------Get Top Level Statistics-----------")
-        get_top_level_statistics(stub)
-        print("---------------Get Top Level Statistics By UUID-----------")
-        get_top_level_statistics_by_uuid(stub)
-        print("-------------- Get Genomes --------------")
-        get_genomes(stub)
-        print("-------------- List Genome Sequences --------------")
-        list_genome_sequences(stub)
-        print("-------------- List Genome Assembly Sequences --------------")
-        list_genome_assembly_sequences(stub)
+        # print("---------------Get Species Information-----------")
+        # get_species_information_by_uuid(stub)
+        # print("---------------Get Assembly Information-----------")
+        # get_assembly_information(stub)
+        # print(
+        #     "---------------Get Genome Information from assembly accession-----------"
+        # )
+        # get_genomes_by_assembly_accession(stub)
+        # print("---------------Get Subspecies Information-----------")
+        # get_sub_species_info(stub)
+        # print("---------------Get Karyotype Information-----------")
+        # get_karyotype_information(stub)
+        # print("---------------Get Top Level Statistics-----------")
+        # get_top_level_statistics(stub)
+        # print("---------------Get Top Level Statistics By UUID-----------")
+        # get_top_level_statistics_by_uuid(stub)
+        # print("-------------- Get Genomes --------------")
+        # get_genomes(stub)
+        # print("-------------- List Genome Sequences --------------")
+        # list_genome_sequences(stub)
+        # print("-------------- List Genome Assembly Sequences --------------")
+        # list_genome_assembly_sequences(stub)
         print("-------------- List Region Info for Given Sequence Name --------------")
         list_genome_assembly_sequences_region(stub)
-        print("-------------- List Releases --------------")
-        list_releases(stub)
-        print("-------------- List Releases for Genome --------------")
-        list_releases_by_uuid(stub)
-        print("---------------Get Datasets List-----------")
-        get_datasets_list_by_uuid(stub)
-        print("-------------- List Dataset information for Genome --------------")
-        get_dataset_infos_by_dataset_type(stub)
-        print("-------------- Get Genome UUID --------------")
-        get_genome_uuid(stub)
-        print("-------------- Get Organisms Group Count --------------")
-        get_organisms_group_count(stub)
+        # print("-------------- List Releases --------------")
+        # list_releases(stub)
+        # print("-------------- List Releases for Genome --------------")
+        # list_releases_by_uuid(stub)
+        # print("---------------Get Datasets List-----------")
+        # get_datasets_list_by_uuid(stub)
+        # print("-------------- List Dataset information for Genome --------------")
+        # get_dataset_infos_by_dataset_type(stub)
+        # print("-------------- Get Genome UUID --------------")
+        # get_genome_uuid(stub)
+        # print("-------------- Get Organisms Group Count --------------")
+        # get_organisms_group_count(stub)
 
 
 if __name__ == "__main__":

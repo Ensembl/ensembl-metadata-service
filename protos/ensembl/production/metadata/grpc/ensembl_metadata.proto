@@ -64,7 +64,7 @@ service EnsemblMetadata {
   rpc GetGenomeAssemblySequence(GenomeAssemblySequenceRequest) returns (stream GenomeAssemblySequence) {}
 
   // Retrieve region information for a genome's assembly with a given sequence region name.
-  rpc GetGenomeAssemblySequenceRegion(GenomeAssemblySequenceRegionRequest) returns (stream GenomeAssemblySequenceRegion) {}
+  rpc GetGenomeAssemblySequenceRegion(GenomeAssemblySequenceRegionRequest) returns (GenomeAssemblySequenceRegion) {}
 
   // Retrieve a list of dataset_ids associated with a genome UUID.
   rpc GetDatasetsListByUUID(DatasetsRequest) returns (Datasets) {}
