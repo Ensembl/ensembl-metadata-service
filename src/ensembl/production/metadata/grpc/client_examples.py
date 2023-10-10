@@ -108,14 +108,12 @@ def list_genome_sequences(stub):
 def list_genome_assembly_sequences(stub):
     request1 = GenomeAssemblySequenceRequest(
         genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
-        assembly_accession="GCA_001624475.1",
         chromosomal_only=False
     )
     genome_assembly_sequences1 = stub.GetGenomeAssemblySequence(request1)
 
     request2 = GenomeAssemblySequenceRequest(
         genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
-        assembly_accession="GCA_001624475.1",
         chromosomal_only=True
     )
     genome_assembly_sequences2 = stub.GetGenomeAssemblySequence(request2)
@@ -131,23 +129,20 @@ def list_genome_assembly_sequences(stub):
 def list_genome_assembly_sequences_region(stub):
     request1 = GenomeAssemblySequenceRegionRequest(
         genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
-        assembly_accession="GCA_001624475.1",
-        sequence_region_name="CM004016.1",
+        sequence_region_name="3",
         chromosomal_only=False
     )
-    genome_assembly_sequences_region1 = stub.GetGenomeAssemblySequence(request1)
-
-    request2 = GenomeAssemblySequenceRegionRequest(
-        genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
-        assembly_accession="GCA_001624475.1",
-        sequence_region_name="CM004016.1",
-        chromosomal_only=True
-    )
-    genome_assembly_sequences_region2 = stub.GetGenomeAssemblySequence(request2)
+    genome_assembly_sequences_region1 = stub.GetGenomeAssemblySequenceRegion(request1)
     print("**** Chromosomal and non-chromosomal ****")
     for seq in genome_assembly_sequences_region1:
         print(seq)
 
+    request2 = GenomeAssemblySequenceRegionRequest(
+        genome_uuid="2afef36f-3660-4b8c-819b-d1e5a77c9918",
+        sequence_region_name="3",
+        chromosomal_only=True
+    )
+    genome_assembly_sequences_region2 = stub.GetGenomeAssemblySequenceRegion(request2)
     print("**** Chromosomal_only ****")
     for seq in genome_assembly_sequences_region2:
         print(seq)
