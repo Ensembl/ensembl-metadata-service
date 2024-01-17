@@ -79,7 +79,7 @@ class GenomeAdaptor(BaseAdaptor):
         return taxids
 
     def fetch_genomes(self, genome_id=None, genome_uuid=None, genome_tag=None, organism_uuid=None, assembly_uuid=None,
-                      assembly_accession=None, assembly_name=None, use_default_assembly=False, ensembl_name=None,
+                      assembly_accession=None, assembly_name=None, ensembl_name=None,
                       taxonomy_id=None, group=None, group_type=None, allow_unreleased=False, unreleased_only=False,
                       site_name=None, release_type=None, release_version=None, current_only=True):
         """
@@ -91,9 +91,8 @@ class GenomeAdaptor(BaseAdaptor):
             genome_tag (Union[str, List[str]]): genome_tag value is either in Assembly.url_name or told_id.
             organism_uuid (Union[str, List[str]]): The UUID(s) of the organism(s) to fetch.
             assembly_uuid (Union[str, List[str]]): The UUID(s) of the assembly(s) to fetch.
-            assembly_accession (Union[str, List[str]]): The assenbly accession of the assembly(s) to fetch.
+            assembly_accession (Union[str, List[str]]): The assembly accession of the assembly(s) to fetch.
             assembly_name (Union[str, List[str]]): The name(s) of the assembly(s) to fetch.
-            use_default_assembly (bool): Whether to use default assembly name or not.
             ensembl_name (Union[str, List[str]]): The Ensembl name(s) of the organism(s) to fetch.
             taxonomy_id (Union[int, List[int]]): The taxonomy ID(s) of the organism(s) to fetch.
             group (Union[str, List[str]]): The name(s) of the organism group(s) to filter by.
@@ -178,18 +177,7 @@ class GenomeAdaptor(BaseAdaptor):
             genome_select = genome_select.filter(Assembly.accession.in_(assembly_accession))
 
         if assembly_name is not None:
-            # case() function is used to conditionally select between columns, sql equivalent is:
-            # CASE
-            #     WHEN :use_default_assembly = 1 THEN assembly.assembly_default
-            #     ELSE assembly.name
-            # END
-            conditional_column = db.case(
-                # literal is used to prevent evaluating use_default_assembly to a boolean (True or False)
-                [(db.literal(use_default_assembly) == 1, Assembly.assembly_default)],
-                else_=Assembly.name
-            )
-            lowered_assemblies = [name.lower() for name in assembly_name]
-            genome_select = genome_select.filter(db.func.lower(conditional_column).in_(lowered_assemblies))
+            genome_select = genome_select.filter(Assembly.name.in_(assembly_name))
 
         if ensembl_name is not None:
             genome_select = genome_select.filter(Organism.ensembl_name.in_(ensembl_name))
@@ -418,7 +406,8 @@ class GenomeAdaptor(BaseAdaptor):
             assembly_accession=assembly_accession, chromosomal_only=chromosomal_only
         )
 
-    def fetch_genome_datasets(self, genome_id=None, genome_uuid=None, organism_uuid=None, allow_unreleased=False,
+    def fetch_genome_datasets(self, genome_id=None, genome_uuid=None, organism_uuid=None, production_name=None,
+                              assembly_name=None, use_default_assembly=False, allow_unreleased=False,
                               unreleased_only=False, dataset_uuid=None, dataset_name=None, dataset_source=None,
                               dataset_type=None, release_version=None, dataset_attributes=None):
         """
@@ -428,6 +417,9 @@ class GenomeAdaptor(BaseAdaptor):
             genome_id (int or list or None): Genome ID(s) to filter by.
             genome_uuid (str or list or None): Genome UUID(s) to filter by.
             organism_uuid (str or list or None): Organism UUID(s) to filter by.
+            production_name (Union[str, List[str]]): The Production name(s) of the organism(s) to fetch.
+            assembly_name (Union[str, List[str]]): The name(s) of the assembly(s) to fetch.
+            use_default_assembly (bool): Whether to use default assembly name or not.
             allow_unreleased (bool): Flag indicating whether to allowing fetching unreleased datasets too or not.
             unreleased_only (bool): Fetch only unreleased datasets (default: False). allow_unreleased is used by gRPC
                                      to fetch both released and unreleased datasets, while unreleased_only
@@ -480,6 +472,8 @@ class GenomeAdaptor(BaseAdaptor):
             genome_id = check_parameter(genome_id)
             genome_uuid = check_parameter(genome_uuid)
             organism_uuid = check_parameter(organism_uuid)
+            production_name = check_parameter(production_name)
+            assembly_name = check_parameter(assembly_name)
             dataset_uuid = check_parameter(dataset_uuid)
             dataset_name = check_parameter(dataset_name)
             dataset_source = check_parameter(dataset_source)
@@ -500,7 +494,6 @@ class GenomeAdaptor(BaseAdaptor):
 
             if "all" in dataset_name:
                 # TODO: fetch the list dynamically from the DB
-                # TODO: you can as well simply remove the filter, if you want them all.
                 dataset_type_names = [
                     'assembly', 'genebuild', 'variation', 'evidence',
                     'regulation_build', 'homologies', 'regulatory_features'
@@ -519,6 +512,30 @@ class GenomeAdaptor(BaseAdaptor):
                 genome_select = genome_select.add_columns(DatasetAttribute, Attribute) \
                     .join(DatasetAttribute, DatasetAttribute.dataset_id == Dataset.dataset_id) \
                     .join(Attribute, Attribute.attribute_id == DatasetAttribute.attribute_id).order_by(Attribute.name)
+
+            if production_name:
+                genome_select = genome_select.add_columns(DatasetAttribute, Attribute) \
+                    .join(DatasetAttribute, DatasetAttribute.dataset_id == Dataset.dataset_id) \
+                    .join(Attribute, Attribute.attribute_id == DatasetAttribute.attribute_id) \
+                    .filter(Attribute.name == 'production.production_name') \
+                    .filter(DatasetAttribute.value.in_(production_name))
+
+            if assembly_name:
+                # case() function is used to conditionally select between columns, sql equivalent is:
+                # CASE
+                #     WHEN :use_default_assembly = 1 THEN assembly.assembly_default
+                #     ELSE assembly.name
+                # END
+                conditional_column = db.case(
+                    # literal is used to prevent evaluating use_default_assembly to a boolean (True or False)
+                    [(db.literal(use_default_assembly) == 1, Assembly.assembly_default)],
+                    else_=Assembly.name
+                )
+                lowered_assemblies = [name.lower() for name in assembly_name]
+
+                genome_select = genome_select.add_columns(Assembly) \
+                    .join(Assembly, Genome.assembly_id == Assembly.assembly_id) \
+                    .filter(db.func.lower(conditional_column).in_(lowered_assemblies))
 
             if allow_unreleased:
                 # Get everything
@@ -549,7 +566,7 @@ class GenomeAdaptor(BaseAdaptor):
                     if release_version:
                         genome_select = genome_select.filter(EnsemblRelease.version <= release_version)
 
-            # print(f"genome_select str ====> {str(genome_select)}")
+            # print(f"[fetch_genome_datasets] genome_select str ====> {str(genome_select)}")
             logger.debug(genome_select)
             with self.metadata_db.session_scope() as session:
                 session.expire_on_commit = False
