@@ -1,5 +1,7 @@
 # Ensembl Metadata Service
 
+[ARCHIVED] This repository is not maintained anymore - related service and code has been moved back to https://github.com/Ensembl/ensembl-metadata-api/
+
 [![Build Status](https://travis-ci.com/Ensembl/ensembl-metadata-service.svg?branch=main)](https://travis-ci.com/Ensembl/ensembl-metadata-service)
 
 gRPC layer for the Ensembl Metadata database.
