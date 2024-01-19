@@ -683,7 +683,7 @@ class TestUtils:
 		assert output == {}
 
 	@pytest.mark.parametrize(
-		"ensembl_name, assembly_name, use_default, expected_output",
+		"production_name, assembly_name, use_default, expected_output",
 		[
 			("homo_sapiens", "GRCh38.p13", False, {"genomeUuid": "a7335667-93e7-11ec-a39d-005056b38ce3"}),
 			("homo_sapiens", "GRCh38.p13", True, {}),
@@ -693,11 +693,11 @@ class TestUtils:
 			("random_ensembl_name", "random_assembly_name", False, {}),
 		]
 	)
-	def test_get_genome_uuid(self, genome_db_conn, ensembl_name, assembly_name, use_default, expected_output):
+	def test_get_genome_uuid(self, genome_db_conn, production_name, assembly_name, use_default, expected_output):
 		output = json_format.MessageToJson(
 			utils.get_genome_uuid(
 				db_conn=genome_db_conn,
-				ensembl_name=ensembl_name,
+				production_name=production_name,
 				assembly_name=assembly_name,
 				use_default=use_default
 			))
